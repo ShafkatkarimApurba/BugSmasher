@@ -73,8 +73,8 @@ BugSmasher uses **Supabase Auth** for user accounts with multiple login methods:
 ```typescript
 // src/game/database/supabaseConfig.ts
 export const supabaseConfig = {
-  url: 'https://faloknbaathdkmaeodxt.supabase.co',
-  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' // JWT format
+  url: 'https://YOUR_PROJECT_ID.supabase.co',
+  anonKey: 'YOUR_SUPABASE_ANON_KEY' // JWT format
 };
 ```
 
@@ -89,8 +89,8 @@ export const supabaseConfig = {
 ### Test Credentials
 
 ```
-Email: bugsmasher@test.com
-Password: GamePass123!
+Email: demo@example.com
+Password: ********
 Google: Any Gmail account works
 ```
 
@@ -129,7 +129,7 @@ src/
 
 - **Production:** https://bugsmasher-ten.vercel.app
 - **GitHub:** https://github.com/FahadIbrahim93/BugSmasher-HopeTheory
-- **Supabase:** https://supabase.com/dashboard/project/faloknbaathdkmaeodxt
+- **Supabase:** https://supabase.com/dashboard/project/YOUR_PROJECT_ID
 
 ---
 

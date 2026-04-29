@@ -59,8 +59,8 @@
 
 ### Env Vars (.env)
 ```
-VITE_SUPABASE_URL=https://faloknbaathdkmaeodxt.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... (JWT!)
+VITE_SUPABASE_URL=https://YOUR_PROJECT_ID.supabase.co
+VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY (JWT!)
 ```
 
 ---

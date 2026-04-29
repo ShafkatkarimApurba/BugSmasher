@@ -4,6 +4,7 @@
 import { createClient, SupabaseClient, User as SupabaseUser } from '@supabase/supabase-js';
 import type { Profile, UserStats, UserSettings } from './types';
 import { supabaseConfig } from './supabaseConfig';
+import { parseOAuthTokensFromHash, type AuthInitStage } from './authSession';
 
 export type AuthProvider = 'guest' | 'email' | 'google' | 'discord' | 'apple';
 
@@ -96,6 +97,8 @@ export class AuthManager {
   private profile: Profile | null = null;
   private listeners: Set<(state: AuthState) => void> = new Set();
   private initialized = false;
+  private sessionInitInFlight: Promise<void> | null = null;
+  private authInitStage: AuthInitStage = 'idle';
 
   constructor() {
     this.load();
@@ -635,13 +638,20 @@ export class AuthManager {
   }
 
   async checkSession(): Promise<void> {
+    if (this.sessionInitInFlight) {
+      await this.sessionInitInFlight;
+      return;
+    }
+
     const sb = getSupabaseClient();
     if (!sb) return;
 
+    this.authInitStage = 'session_lookup';
     const { data: { session } } = await sb.auth.getSession();
     if (session?.user) {
       await this.handleSupabaseUser(session.user);
     }
+    this.authInitStage = 'ready';
   }
 
   getSupabaseConfig(): { url: string; anonKey: string } {
@@ -657,52 +667,65 @@ export class AuthManager {
   }
 
   async initialize(): Promise<void> {
-    console.log('Initializing auth system...');
-    const sb = getSupabaseClient();
-    if (!sb) {
-      console.log('Supabase not available, using local-only mode');
+    if (this.sessionInitInFlight) {
+      await this.sessionInitInFlight;
       return;
     }
-    
-    const hash = window.location.hash;
-    const urlParams = new URLSearchParams(hash.substring(1));
-    const accessToken = urlParams.get('access_token');
-    const refreshToken = urlParams.get('refresh_token');
-    const expiresIn = urlParams.get('expires_in');
-    
-    if (accessToken && refreshToken && expiresIn) {
-      console.log('OAuth tokens detected in URL, exchanging for session...');
-      try {
-        const { data, error } = await sb.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken
-        });
-        if (error) {
-          console.error('Session exchange error:', error.message);
-        } else if (data.session) {
-          console.log('Session exchanged successfully for:', data.session.user.email);
-          await this.handleSupabaseUser(data.session.user);
-          return;
-        }
-      } catch (e) {
-        console.error('Failed to exchange session:', e);
+
+    this.sessionInitInFlight = (async () => {
+      console.log('Initializing auth system...');
+      const sb = getSupabaseClient();
+      if (!sb) {
+        console.log('Supabase not available, using local-only mode');
+        return;
       }
-    }
-    
-    let { data: { session } } = await sb.auth.getSession();
-    
-    if (!session?.user && sb) {
-      console.log('No session yet, checking again...');
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      const result = await sb.auth.getSession();
-      session = result.data.session;
-    }
-    
-    if (session?.user) {
-      console.log('Found session for:', session.user.email);
-      await this.handleSupabaseUser(session.user);
-    } else {
-      console.log('No existing session found');
+
+      const oauthTokens = parseOAuthTokensFromHash(window.location.hash);
+
+      if (oauthTokens) {
+        this.authInitStage = 'token_exchange';
+        console.log('OAuth tokens detected in URL, exchanging for session...');
+        try {
+          const { data, error } = await sb.auth.setSession({
+            access_token: oauthTokens.accessToken,
+            refresh_token: oauthTokens.refreshToken
+          });
+          if (error) {
+            console.error('Session exchange error:', error.message);
+          } else if (data.session) {
+            console.log('Session exchanged successfully for:', data.session.user.email);
+            await this.handleSupabaseUser(data.session.user);
+            this.authInitStage = 'ready';
+            return;
+          }
+        } catch (e) {
+          console.error('Failed to exchange session:', e);
+        }
+      }
+
+      this.authInitStage = 'session_lookup';
+      let { data: { session } } = await sb.auth.getSession();
+
+      if (!session?.user) {
+        console.log('No session yet, checking again...');
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const result = await sb.auth.getSession();
+        session = result.data.session;
+      }
+
+      if (session?.user) {
+        console.log('Found session for:', session.user.email);
+        await this.handleSupabaseUser(session.user);
+      } else {
+        console.log('No existing session found');
+      }
+      this.authInitStage = 'ready';
+    })();
+
+    try {
+      await this.sessionInitInFlight;
+    } finally {
+      this.sessionInitInFlight = null;
     }
   }
 }

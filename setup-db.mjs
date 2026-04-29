@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://faloknbaathdkmaeodxt.supabase.co';
-const serviceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhbG9rbmJhYXRoZGttYWVvZHh0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NzIyNzU0NywiZXhwIjoyMDkyODAzNTQ3fQ.i3hGk8Pib_o1ISX4RHhKXqq90grwci8Wa6GnUGbKajA';
+const supabaseUrl = 'https://YOUR_PROJECT_ID.supabase.co';
+const serviceKey = 'YOUR_SUPABASE_SERVICE_ROLE_KEY';
 
 const supabase = createClient(supabaseUrl, serviceKey, {
   auth: { persistSession: false }

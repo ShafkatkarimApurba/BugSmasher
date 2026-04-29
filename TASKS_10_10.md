@@ -62,7 +62,7 @@ npm run build   # Production build
 
 Upload `dist/` folder to Netlify/Vercel or any static host.
 
-**Supabase:** `https://faloknbaathdkmaeodxt.supabase.co`
+**Supabase:** `https://YOUR_PROJECT_ID.supabase.co`
 
 ---
 

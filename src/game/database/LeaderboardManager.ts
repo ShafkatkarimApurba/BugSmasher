@@ -229,7 +229,7 @@ export class LeaderboardManager {
     try {
       const { data, error } = await sb
         .from('friends')
-        .select('friend_id, profiles!inner(id, username, avatar_id, level), last_seen, online)')
+        .select('friend_id, last_seen, online, profiles!inner(id, username, avatar_id, level)')
         .eq('profile_id', profile.id)
         .eq('status', 'accepted');
 

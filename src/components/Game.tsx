@@ -76,8 +76,10 @@ export function Game({ onMainMenu }: { onMainMenu: () => void }) {
 
   const handleNextWave = () => {
     setIsUpgrading(false);
+    setIsPaused(false);
     const engine = engineRef.current;
     if (engine) {
+      engine.isPaused = false;
       engine.resume();
     }
   };
@@ -110,7 +112,7 @@ export function Game({ onMainMenu }: { onMainMenu: () => void }) {
         onWaveComplete={handleWaveComplete}
       />
       
-      {!isGameOver && <HUD engineRef={engineRef} onPauseToggle={togglePause} isPaused={isPaused} />}
+      {!isGameOver && !isUpgrading && <HUD engineRef={engineRef} onPauseToggle={togglePause} isPaused={isPaused} />}
       
       {isPaused && !isGameOver && !isUpgrading && (
         <PauseMenu 
@@ -124,6 +126,7 @@ export function Game({ onMainMenu }: { onMainMenu: () => void }) {
           score={finalScore} 
           onUpgrade={handleUpgrade} 
           onNextWave={handleNextWave} 
+          onClose={handleNextWave}
           wave={currentWave}
           healthLevel={upgradeLevels.health}
           radiusLevel={upgradeLevels.radius}

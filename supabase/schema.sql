@@ -88,6 +88,8 @@ CREATE TABLE IF NOT EXISTS friends (
   profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
   friend_id UUID REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
   status TEXT DEFAULT 'pending',
+  online BOOLEAN DEFAULT false,
+  last_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   UNIQUE(profile_id, friend_id)
 );

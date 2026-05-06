@@ -1,4 +1,4 @@
-import { Shield, Zap, Crosshair, Heart } from 'lucide-react';
+import { Zap, Crosshair, Heart, X } from 'lucide-react';
 import { motion, Variants } from 'motion/react';
 import { soundManager } from '../game/SoundManager';
 import { GameConfig } from '../game/GameConfig';
@@ -7,13 +7,14 @@ interface UpgradeMenuProps {
   score: number;
   onUpgrade: (type: 'health' | 'radius' | 'turret', cost: number) => void;
   onNextWave: () => void;
+  onClose: () => void;
   wave: number;
   healthLevel: number;
   radiusLevel: number;
   turretLevel: number;
 }
 
-export function UpgradeMenu({ score, onUpgrade, onNextWave, wave, healthLevel, radiusLevel, turretLevel }: UpgradeMenuProps) {
+export function UpgradeMenu({ score, onUpgrade, onNextWave, onClose, wave, healthLevel, radiusLevel, turretLevel }: UpgradeMenuProps) {
 
   const healthCost = GameConfig.upgrades.health.baseCost + healthLevel * GameConfig.upgrades.health.costMultiplier;
   const radiusCost = GameConfig.upgrades.radius.baseCost + radiusLevel * GameConfig.upgrades.radius.costMultiplier;
@@ -33,6 +34,12 @@ export function UpgradeMenu({ score, onUpgrade, onNextWave, wave, healthLevel, r
     soundManager.init();
     soundManager.uiClick();
     onNextWave();
+  };
+
+  const handleClose = () => {
+    soundManager.init();
+    soundManager.uiClick();
+    onClose();
   };
 
   const handleHover = () => {
@@ -71,6 +78,13 @@ export function UpgradeMenu({ score, onUpgrade, onNextWave, wave, healthLevel, r
         animate="visible"
         className="max-w-4xl w-full text-center my-auto relative"
       >
+        <button
+          onClick={handleClose}
+          aria-label="Close upgrades and continue to next wave"
+          className="absolute top-0 right-0 -mt-2 sm:-mt-4 bg-black/40 hover:bg-white/10 border border-white/15 rounded-full p-2.5 transition-colors"
+        >
+          <X className="w-4 h-4 text-zinc-300" />
+        </button>
         <motion.div variants={itemVariants} className="mb-12">
           <h2 className="text-3xl sm:text-4xl font-black text-white font-display mb-4 uppercase tracking-widest">
             WAVE {wave - 1} CLEARED
@@ -173,14 +187,24 @@ export function UpgradeMenu({ score, onUpgrade, onNextWave, wave, healthLevel, r
         </div>
 
         <motion.div variants={itemVariants} className="flex justify-center">
-          <button 
-            onClick={handleNextWave}
-            onMouseEnter={handleHover}
-            aria-label={`Start Wave ${wave}`}
-            className="group relative px-12 py-5 bg-transparent border-[0.5px] border-white/30 text-white font-bold text-sm hover:bg-white hover:text-black rounded-full hover:scale-105 active:scale-95 transition-all tracking-widest uppercase overflow-hidden"
-          >
-            <span className="relative z-10">Proceed to Wave {wave}</span>
-          </button>
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <button 
+              onClick={handleClose}
+              onMouseEnter={handleHover}
+              aria-label={`Close upgrades and start Wave ${wave}`}
+              className="group relative px-8 py-4 bg-transparent border-[0.5px] border-white/20 text-zinc-300 font-bold text-xs hover:bg-white/10 hover:text-white rounded-full hover:scale-105 active:scale-95 transition-all tracking-widest uppercase overflow-hidden"
+            >
+              <span className="relative z-10">Skip Upgrades</span>
+            </button>
+            <button 
+              onClick={handleNextWave}
+              onMouseEnter={handleHover}
+              aria-label={`Start Wave ${wave}`}
+              className="group relative px-12 py-5 bg-transparent border-[0.5px] border-white/30 text-white font-bold text-sm hover:bg-white hover:text-black rounded-full hover:scale-105 active:scale-95 transition-all tracking-widest uppercase overflow-hidden"
+            >
+              <span className="relative z-10">Proceed to Wave {wave}</span>
+            </button>
+          </div>
         </motion.div>
       </motion.div>
     </div>

@@ -216,27 +216,31 @@ export class Renderer {
     this.engine.ctx = gameCtx; // Temporarily redirect engine context for sub-renderers
 
     // Draw splatters
-    const activeSplatters = this.engine.particleSystem.splatters.filter(s => s.active);
-    for (let i = 0; i < activeSplatters.length; i++) {
-      this.particles.drawSplatter(activeSplatters[i]);
+    for (let i = 0; i < this.engine.particleSystem.splatters.length; i++) {
+      if (this.engine.particleSystem.splatters[i].active) {
+        this.particles.drawSplatter(this.engine.particleSystem.splatters[i]);
+      }
     }
 
     // Draw shockwaves
-    const activeShockwaves = this.engine.particleSystem.shockwaves.filter(s => s.active);
-    for (let i = 0; i < activeShockwaves.length; i++) {
-      this.particles.drawShockwave(activeShockwaves[i]);
+    for (let i = 0; i < this.engine.particleSystem.shockwaves.length; i++) {
+      if (this.engine.particleSystem.shockwaves[i].active) {
+        this.particles.drawShockwave(this.engine.particleSystem.shockwaves[i]);
+      }
     }
 
     // Draw lasers
-    const activeLasers = this.engine.particleSystem.lasers.filter(l => l.active);
-    for (let i = 0; i < activeLasers.length; i++) {
-      this.particles.drawLaser(activeLasers[i]);
+    for (let i = 0; i < this.engine.particleSystem.lasers.length; i++) {
+      if (this.engine.particleSystem.lasers[i].active) {
+        this.particles.drawLaser(this.engine.particleSystem.lasers[i]);
+      }
     }
 
     // Draw muzzle flashes
-    const activeMuzzles = this.engine.particleSystem.muzzleFlashes.filter(m => m.active);
-    for (let i = 0; i < activeMuzzles.length; i++) {
-      this.particles.drawMuzzleFlash(activeMuzzles[i]);
+    for (let i = 0; i < this.engine.particleSystem.muzzleFlashes.length; i++) {
+      if (this.engine.particleSystem.muzzleFlashes[i].active) {
+        this.particles.drawMuzzleFlash(this.engine.particleSystem.muzzleFlashes[i]);
+      }
     }
 
     // Draw hazards
@@ -258,15 +262,17 @@ export class Renderer {
     }
 
     // Draw resources
-    const activeResources = this.engine.resources.filter(r => r.active);
-    for (let i = 0; i < activeResources.length; i++) {
-      this.drawResource(activeResources[i]);
+    for (let i = 0; i < this.engine.resources.length; i++) {
+      if (this.engine.resources[i].active) {
+        this.drawResource(this.engine.resources[i]);
+      }
     }
 
     // Draw particles
-    const activeParticles = this.engine.particleSystem.particles.filter(p => p.active);
-    for (let i = 0; i < activeParticles.length; i++) {
-      this.particles.drawParticle(activeParticles[i]);
+    for (let i = 0; i < this.engine.particleSystem.particles.length; i++) {
+      if (this.engine.particleSystem.particles[i].active) {
+        this.particles.drawParticle(this.engine.particleSystem.particles[i]);
+      }
     }
 
     // Draw base

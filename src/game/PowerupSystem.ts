@@ -4,6 +4,7 @@ import { GameConfig } from './GameConfig';
 import { ProgressionManager } from './ProgressionManager';
 import { StatsManager } from './StatsManager';
 import { RESOURCES, ResourceType } from './ResourceTypes';
+import { soundManager } from './SoundManager';
 
 /**
  * PowerupSystem — handles all powerup and resource logic.
@@ -118,7 +119,7 @@ export class PowerupSystem {
     this.engine.renderer.powerupAlpha = 1.0;
     this.engine.totalPowerupsCollected++;
     StatsManager.updateStats({ totalPowerupsCollected: 1 });
-    import('./SoundManager').then(({ soundManager }) => soundManager.powerup(type));
+    soundManager.powerup(type);
     this.engine.particleSystem.spawnShockwave(
       this.engine.coreX,
       this.engine.coreY,
@@ -164,7 +165,8 @@ export class PowerupSystem {
         this.engine.spikeBurstTimer = GameConfig.powerups.duration;
         break;
       case 'nuke': {
-        import('./SoundManager').then(({ soundManager }) => soundManager.nuke());
+        this.engine.renderer.clickFlash = 1.0;
+        soundManager.nuke();
         this.engine.shake(1.5, 40, 0, 1);
         this.engine.renderer.chromaticOffset = 30;
         this.engine.triggerHitStop(0.15);
@@ -194,7 +196,10 @@ export class PowerupSystem {
           '#00ffaa',
           180
         );
-        import('./SoundManager').then(({ soundManager }) => soundManager.skillUpgrade());
+        this.engine.rapidFireTimer = 10;
+        this.engine.isOverheated = false;
+        this.engine.weaponHeat = 0;
+        soundManager.skillUpgrade();
         break;
       }
     }
@@ -247,7 +252,7 @@ export class PowerupSystem {
       if (distSq < 900) {
         ProgressionManager.addResource(r.type, 1);
         r.active = false;
-        import('./SoundManager').then(({ soundManager }) => soundManager.resource(r.type));
+        soundManager.resource(r.type);
       }
     }
   }

@@ -57,6 +57,7 @@ export class VisualFXPipeline {
   private bgCtx: CanvasRenderingContext2D | null;
   private gameCanvas: HTMLCanvasElement;
   private gameCtx: CanvasRenderingContext2D | null;
+  private lightCanvas: HTMLCanvasElement | null = null;
 
   // State
   private width: number = 0;
@@ -126,6 +127,12 @@ export class VisualFXPipeline {
       this.gameCanvas.width = scaledW;
       this.gameCanvas.height = scaledH;
       if (this.gameCtx) this.gameCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    if (this.lightCanvas) {
+      if (this.lightCanvas.width !== scaledW || this.lightCanvas.height !== scaledH) {
+        this.lightCanvas.width = scaledW;
+        this.lightCanvas.height = scaledH;
+      }
     }
 
     this.bloom.resize(width, height);
@@ -236,18 +243,26 @@ export class VisualFXPipeline {
 
     // 2. Draw lighting layer (if enabled and lights present)
     if (this.lighting.enabled && this.lighting.lightCount > 0) {
-      // Create a temporary lighting canvas to render and blend
-      const lightCanvas = document.createElement('canvas');
-      lightCanvas.width = targetCtx.canvas.width;
-      lightCanvas.height = targetCtx.canvas.height;
-      const lightCtx = lightCanvas.getContext('2d');
+      if (!this.lightCanvas) {
+        this.lightCanvas = document.createElement('canvas');
+        this.lightCanvas.width = targetCtx.canvas.width;
+        this.lightCanvas.height = targetCtx.canvas.height;
+      } else if (this.lightCanvas.width !== targetCtx.canvas.width || this.lightCanvas.height !== targetCtx.canvas.height) {
+        this.lightCanvas.width = targetCtx.canvas.width;
+        this.lightCanvas.height = targetCtx.canvas.height;
+      }
+      
+      const lightCtx = this.lightCanvas.getContext('2d');
       if (lightCtx) {
+        lightCtx.save();
         lightCtx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+        lightCtx.clearRect(0, 0, w, h);
         this.lighting.render(lightCtx, w, h, this.engine);
+        lightCtx.restore();
 
         targetCtx.save();
         targetCtx.globalCompositeOperation = 'screen';
-        targetCtx.drawImage(lightCanvas, 0, 0, w, h);
+        targetCtx.drawImage(this.lightCanvas, 0, 0, w, h);
         targetCtx.restore();
       }
     }

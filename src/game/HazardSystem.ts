@@ -1,6 +1,7 @@
 import { GameEngine } from './GameEngine';
 import { Hazard } from './GameTypes';
 import { GameConfig } from './GameConfig';
+import { soundManager } from './SoundManager';
 
 /**
  * HazardSystem — handles all hazard-related logic (barrages, webs, lava).
@@ -66,7 +67,7 @@ export class HazardSystem {
     if (h.type === 'barrage') {
       this.engine.particleSystem.spawnExplosion(h.x, h.y, '#ff3300');
       this.engine.particleSystem.spawnShockwave(h.x, h.y, '#ff6600', h.radius * 2);
-      import('./SoundManager').then(({ soundManager }) => soundManager.splat());
+      soundManager.splat();
 
       const distSq =
         (h.x - this.engine.coreX) ** 2 + (h.y - this.engine.coreY) ** 2;
@@ -75,7 +76,7 @@ export class HazardSystem {
         this.engine.health -= GameConfig.player.hitDamage * 1.5;
         this.engine.renderer.impactFlash = 1.5;
         this.engine.shake(0.5, 25);
-        import('./SoundManager').then(({ soundManager }) => soundManager.hitBase());
+        soundManager.hitBase();
       }
     }
   }

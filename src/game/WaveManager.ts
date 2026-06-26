@@ -1,6 +1,7 @@
 import { GameEngine } from './GameEngine';
 import { Bug } from './GameTypes';
 import { GameConfig } from './GameConfig';
+import { soundManager } from './SoundManager';
 
 export class WaveManager {
   engine: GameEngine;
@@ -75,7 +76,7 @@ export class WaveManager {
     else this.engine.currentBiome = 'neon_core';
 
     if (oldBiome !== this.engine.currentBiome) {
-        import('./SoundManager').then(({ soundManager }) => soundManager.playBiomeMusic(this.engine.currentBiome));
+        soundManager.playBiomeMusic(this.engine.currentBiome);
     }
   }
 
@@ -89,7 +90,7 @@ export class WaveManager {
         }
         
         if (this.bossIntroTimer < 2.0 && !this.bossWarningSounded) {
-             import('./SoundManager').then(({ soundManager }) => soundManager.bossWarning());
+             soundManager.bossWarning();
              this.bossWarningSounded = true;
         }
         return; // Don't spawn anything during intro
@@ -169,7 +170,7 @@ export class WaveManager {
 
     this.engine.bugs.push(bug);
     if (!this.bossWarningSounded) {
-        import('./SoundManager').then(({ soundManager }) => soundManager.bossWarning());
+        soundManager.bossWarning();
         this.bossWarningSounded = true;
     }
   }

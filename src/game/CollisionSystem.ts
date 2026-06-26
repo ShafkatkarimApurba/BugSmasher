@@ -1,6 +1,7 @@
 import { GameEngine } from './GameEngine';
 import { Bug, ResourcePickup } from './GameTypes';
 import { GameConfig } from './GameConfig';
+import { soundManager } from './SoundManager';
 
 /**
  * CollisionSystem — handles bug-core collision, dash push, and resource proximity.
@@ -31,10 +32,10 @@ export class CollisionSystem {
       );
       this.engine.renderer.chromaticOffset = 15;
       this.engine.triggerHitStop(0.1);
-      import('./SoundManager').then(({ soundManager }) => soundManager.hitBase());
+      soundManager.hitBase();
     } else {
       this.engine.shake(0.2, 5);
-      import('./SoundManager').then(({ soundManager }) => soundManager.splat());
+      soundManager.splat();
     }
     this.engine.particleSystem.spawnExplosion(bug.x, bug.y, bug.color);
   }

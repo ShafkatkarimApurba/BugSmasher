@@ -1,6 +1,7 @@
 import { GameEngine } from './GameEngine';
-import { Bug } from './GameTypes';
+import { Bug, BossConfig } from './GameTypes';
 import { GameConfig } from './GameConfig';
+import { soundManager } from './SoundManager';
 
 /**
  * BossSystem — handles all boss-specific ability logic.
@@ -32,7 +33,7 @@ export class BossSystem {
     if (bug.phase === 1 && hpPercent < 0.66) {
       bug.phase = 2;
       this.engine.shake(1.0, 30);
-      import('./SoundManager').then(({ soundManager }) => soundManager.powerup('overdrive'));
+      soundManager.powerup('overdrive');
     } else if (bug.phase === 2 && hpPercent < 0.33) {
       bug.phase = 3;
       bug.isShielded = true;
@@ -73,7 +74,7 @@ export class BossSystem {
     // Global Barrage
     if (bug.phase >= 2 && bug.abilityTimer > conf.barrageRate) {
       bug.abilityTimer = 0;
-      import('./SoundManager').then(({ soundManager }) => soundManager.bossAbility());
+      soundManager.bossAbility();
       for (let j = 0; j < conf.barrageCount; j++) {
         this.engine.hazards.push({
           id: `barrage_${this.engine.globalTime}_${j}`,
@@ -110,7 +111,7 @@ export class BossSystem {
         duration: 8.0,
         active: true,
       });
-      import('./SoundManager').then(({ soundManager }) => soundManager.uiHover());
+      soundManager.uiHover();
     }
   }
 

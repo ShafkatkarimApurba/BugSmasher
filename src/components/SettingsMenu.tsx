@@ -104,24 +104,26 @@ export function SettingsMenu({ onBack, onOpenArmory }: { onBack: () => void; onO
   };
 
   return (
-    <div className="absolute inset-0 bg-black/80 backdrop-blur-2xl flex flex-col items-center justify-center z-[60] p-4">
+    <div className="absolute inset-0 bg-black/80 backdrop-blur-2xl flex flex-col items-center justify-start sm:justify-center z-[60] p-3 sm:p-4 overflow-y-auto overscroll-contain">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-2xl w-full bg-zinc-900/50 border border-white/10 p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden"
+        className="max-w-2xl w-full bg-zinc-900/95 border border-white/10 p-5 sm:p-8 rounded-[2rem] shadow-2xl relative my-4"
       >
+        {/* Sticky back button */}
         <button 
           onClick={() => { soundManager.uiClick(); onBack(); }}
-          className="absolute top-8 left-8 p-2 rounded-full border border-white/10 hover:bg-white/5 transition-colors text-zinc-400 hover:text-white"
+          className="sticky top-0 z-10 mb-4 flex items-center gap-2 p-2 rounded-full border border-white/10 hover:bg-white/5 transition-colors text-zinc-400 hover:text-white w-fit"
         >
           <ArrowLeft className="w-5 h-5" />
+          <span className="text-xs font-mono uppercase tracking-widest pr-2">Back</span>
         </button>
 
-        <div className="flex flex-col items-center mb-12">
-          <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
-            <Settings2 className="w-8 h-8 text-white" />
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-3">
+            <Settings2 className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
           </div>
-          <h2 className="text-3xl font-black text-white uppercase tracking-[0.2em] font-display">System Settings</h2>
+          <h2 className="text-2xl sm:text-3xl font-black text-white uppercase tracking-[0.2em] font-display">System Settings</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -321,10 +323,10 @@ export function SettingsMenu({ onBack, onOpenArmory }: { onBack: () => void; onO
           </button>
         </div>
 
-        <div className="mt-12 flex justify-center">
+        <div className="mt-8 flex justify-center pb-2">
           <button 
             onClick={() => { soundManager.uiClick(); onBack(); }}
-            className="px-12 py-4 bg-white text-black font-black text-xs uppercase tracking-[0.3em] rounded-full hover:bg-zinc-200 transition-all hover:scale-105 active:scale-95"
+            className="px-10 py-4 bg-white text-black font-black text-xs uppercase tracking-[0.3em] rounded-full hover:bg-zinc-200 transition-all active:scale-95 w-full sm:w-auto"
           >
             Apply Changes
           </button>

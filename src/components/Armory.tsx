@@ -145,7 +145,7 @@ export function Armory({ onClose }: ArmoryProps) {
   };
 
   return (
-    <div className="absolute inset-0 bg-black/95 z-[60] backdrop-blur-2xl flex flex-col p-6 sm:p-10 font-sans text-white overflow-hidden">
+    <div className="absolute inset-0 bg-black/95 z-[60] backdrop-blur-2xl flex flex-col p-4 sm:p-6 md:p-10 font-sans text-white overflow-y-auto overscroll-contain">
       <div className="max-w-6xl w-full mx-auto flex flex-col h-full">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">

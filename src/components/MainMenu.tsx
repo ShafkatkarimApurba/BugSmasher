@@ -36,7 +36,7 @@ export function MainMenu({
   const streak = getStreakInfo();
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-[#050505] relative p-4">
+    <div className="flex flex-col items-center justify-start sm:justify-center min-h-full h-full bg-[#050505] relative p-4 overflow-y-auto overscroll-contain">
       {isArmoryOpen && <Armory onClose={() => setIsArmoryOpen(false)} />}
       {isAchievementsOpen && <AchievementGallery onClose={() => setIsAchievementsOpen(false)} />}
       {isAccountOpen && <AccountMenu onClose={() => setIsAccountOpen(false)} />}
@@ -55,7 +55,7 @@ export function MainMenu({
         />
       )}
 
-      <div className="z-10 flex flex-col items-center space-y-8 sm:space-y-10 w-full max-w-lg">
+      <div className="z-10 flex flex-col items-center space-y-8 sm:space-y-10 w-full max-w-lg py-6 sm:py-0">
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center mb-3">
             <Bug className="w-12 h-12 sm:w-16 sm:h-16 text-white opacity-80" />

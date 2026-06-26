@@ -7,8 +7,8 @@ export function AchievementGallery({ onClose }: { onClose: () => void }) {
   const total = ACHIEVEMENTS_DATA.length;
 
   return (
-    <div className="absolute inset-0 bg-black/90 backdrop-blur-2xl z-[70] flex items-center justify-center p-4">
-      <div className="max-w-3xl w-full bg-zinc-900/80 border border-white/10 rounded-3xl p-8 max-h-[90vh] overflow-y-auto relative">
+    <div className="absolute inset-0 bg-black/90 backdrop-blur-2xl z-[70] flex items-start sm:items-center justify-center p-3 sm:p-4 overflow-y-auto overscroll-contain">
+      <div className="max-w-3xl w-full bg-zinc-900/80 border border-white/10 rounded-3xl p-5 sm:p-8 relative my-4">
         <button
           onClick={() => { soundManager.uiClick(); onClose(); }}
           className="absolute top-6 right-6 p-2 rounded-full border border-white/10 hover:bg-white/10"

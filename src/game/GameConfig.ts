@@ -32,7 +32,7 @@ export const GameConfig = {
     scout: { color: '#9C27B0', baseSpeed: 100, speedPerWave: 10, size: 12, score: 20, baseHp: 1, hpPerWave: 0 },
     tank:  { color: '#ff00ff', baseSpeed: 30, speedPerWave: 3, size: 25, score: 50, baseHp: 3, hpPerWave: 0.33 },
     swarmer: { color: '#FF9800', baseSpeed: 40, speedPerWave: 4, size: 18, score: 30, baseHp: 2, hpPerWave: 0.1 },
-    mini: { color: '#ffaa00', baseSpeed: 120, speedPerWave: 8, size: 8, score: 5, baseHp: 0.5, hpPerWave: 0 },
+    mini: { color: '#ffaa00', baseSpeed: 120, speedPerWave: 8, size: 8, score: 5, baseHp: 1, hpPerWave: 0 },
     ghost: { color: '#e0e0ff', baseSpeed: 60, speedPerWave: 5, size: 15, score: 40, baseHp: 1, hpPerWave: 0 },
     phase: { color: '#d400ff', baseSpeed: 45, speedPerWave: 6, size: 16, score: 45, baseHp: 2, hpPerWave: 0.15 },
     ember: { color: '#ff5500', baseSpeed: 35, speedPerWave: 4, size: 20, score: 55, baseHp: 4, hpPerWave: 0.4 },

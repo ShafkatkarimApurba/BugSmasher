@@ -241,11 +241,11 @@ export class WaveManager {
     
     // Scale stats by both Wave and Performance
     const scaling = 1 + (wave * 0.05) + (this.engine.performanceFactor - 1.0);
-    const hp = Math.floor(
+    const hp = Math.max(1, Math.floor(
       (conf.baseHp + Math.floor(wave * conf.hpPerWave)) *
         (1 + (this.engine.performanceFactor - 1) * 0.5) *
         this.difficultyHpMultiplier
-    );
+    ));
     const speed =
       (conf.baseSpeed + wave * conf.speedPerWave) *
       (1 + (this.engine.performanceFactor - 1) * 0.2) *

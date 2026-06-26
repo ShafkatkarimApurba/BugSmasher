@@ -694,8 +694,8 @@ export class GameEngine {
       }
     }
 
-    // Swarmer splitting logic
-    if (bug.type === 'swarmer' || this.currentBiome === 'golden_cache') {
+    // Swarmer splitting logic — mini bugs must NOT split again (prevents infinite recursion)
+    if ((bug.type === 'swarmer' || this.currentBiome === 'golden_cache') && bug.type !== 'mini') {
       const splitCount = this.currentBiome === 'golden_cache' ? 2 : 3;
       for (let i = 0; i < splitCount; i++) {
         const angle = (Math.PI * 2 / splitCount) * i;

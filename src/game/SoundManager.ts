@@ -1374,8 +1374,11 @@ export class SoundManager {
       });
     });
 
-    // Schedule next update if still playing
+    // Schedule next update if still playing — clear first to prevent stacked orphan chains
     if (this.musicLayers.length > 0) {
+      if (this.musicUpdateTimeoutId !== null) {
+        clearTimeout(this.musicUpdateTimeoutId);
+      }
       this.musicUpdateTimeoutId = setTimeout(() => this.scheduleMusicUpdate(), updateInterval * 1000);
     }
   }

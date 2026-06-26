@@ -1,0 +1,85 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "username"]
+    },
+    "GameSave": {
+      "title": "GameSave",
+      "description": "Cloud save data for game state",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "data": { "type": "object" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "data"]
+    },
+    "Progression": {
+      "title": "Progression",
+      "description": "Inventory, skills and prestige status",
+      "type": "object",
+      "properties": {
+        "inventory": { "type": "object" },
+        "skills": { "type": "object" },
+        "consumables": { "type": "object" },
+        "prestigeLevel": { "type": "number" },
+        "prestigePoints": { "type": "number" }
+      },
+      "required": ["inventory", "skills", "consumables"]
+    },
+    "Story": {
+      "title": "Story",
+      "description": "Unlocked lore logs and played cinematic beats",
+      "type": "object",
+      "properties": {
+        "playedBeats": { "type": "array" },
+        "unlockedLogs": { "type": "array" }
+      },
+      "required": ["playedBeats", "unlockedLogs"]
+    },
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "High score entry",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "score": { "type": "number" },
+        "wave": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "username", "score", "wave"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/users/{userId}/private/saves": {
+      "schema": "GameSave",
+      "description": "User specific game saves"
+    },
+    "/users/{userId}/private/progression": {
+      "schema": "Progression",
+      "description": "User specfic game progression info"
+    },
+    "/users/{userId}/private/story": {
+      "schema": "Story",
+      "description": "User specific unlocked lore/story info"
+    },
+    "/leaderboard/{userId}": {
+      "schema": "LeaderboardEntry",
+      "description": "Public leaderboard entries"
+    }
+  }
+}

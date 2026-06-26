@@ -1,5 +1,6 @@
 {
-  "name": "BUGSMASHER",
-  "description": "Defend the core and smash the swarm! A cyberpunk bug-smasher arcade game.",
-  "requestFramePermissions": []
+  "name": "BUGSMASHER AAA",
+  "description": "Defend the core and smash the swarm! Generate custom AAA battlegrounds using Gemini 3.1 Pro Image.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

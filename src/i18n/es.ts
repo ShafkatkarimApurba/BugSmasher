@@ -1,0 +1,27 @@
+import type { TranslationKey } from './en';
+
+export const es: Record<TranslationKey, string> = {
+  'app.title': 'BUGSMASHER',
+  'app.tagline': 'DEFIENDE EL NÚCLEO. APLASTA EL ENJAMBRE.',
+  'menu.start': 'Iniciar Secuencia',
+  'menu.settings': 'Ajustes del Sistema',
+  'menu.daily': 'Desafío Diario',
+  'menu.armory': 'Armería',
+  'menu.achievements': 'Galería de Logros',
+  'menu.leaderboard': 'Clasificación',
+  'mode.standard': 'Defensa Estándar',
+  'mode.standardDesc': 'Progresión clásica por oleadas con mejoras.',
+  'mode.endless': 'Protocolo Infinito',
+  'mode.endlessDesc': 'Sin límite de oleadas — intensidad creciente.',
+  'mode.bossRush': 'Asalto de Jefes',
+  'mode.bossRushDesc': 'Un jefe cada oleada. Amenaza máxima.',
+  'settings.accessibility': 'Accesibilidad',
+  'settings.controls': 'Controles',
+  'game.over': 'DEFENSA CAÍDA',
+  'game.share': 'Compartir Puntuación',
+  'stats.title': 'Estadísticas Totales',
+  'stats.runs': 'Partidas',
+  'stats.bestWave': 'Mejor Oleada',
+  'stats.kills': 'Bichos Eliminados',
+  'challenge.friend': 'Desafío de Amigo',
+};

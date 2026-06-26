@@ -1,0 +1,27 @@
+export const en = {
+  'app.title': 'BUGSMASHER',
+  'app.tagline': 'DEFEND THE CORE. SMASH THE SWARM.',
+  'menu.start': 'Initialize Sequence',
+  'menu.settings': 'System Settings',
+  'menu.daily': 'Daily Challenge',
+  'menu.armory': 'Armory',
+  'menu.achievements': 'Achievement Gallery',
+  'menu.leaderboard': 'Leaderboard',
+  'mode.standard': 'Standard Defense',
+  'mode.standardDesc': 'Classic wave progression with upgrades between waves.',
+  'mode.endless': 'Endless Protocol',
+  'mode.endlessDesc': 'No wave cap — escalating intensity until core failure.',
+  'mode.bossRush': 'Boss Rush',
+  'mode.bossRushDesc': 'Every wave spawns a boss. Maximum threat.',
+  'settings.accessibility': 'Accessibility',
+  'settings.controls': 'Control Bindings',
+  'game.over': 'DEFENSE DOWN',
+  'game.share': 'Share Score Card',
+  'stats.title': 'Lifetime Statistics',
+  'stats.runs': 'Total Runs',
+  'stats.bestWave': 'Best Wave',
+  'stats.kills': 'Bugs Eliminated',
+  'challenge.friend': 'Friend Challenge',
+} as const;
+
+export type TranslationKey = keyof typeof en;

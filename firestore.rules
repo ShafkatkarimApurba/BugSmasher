@@ -1,0 +1,104 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Phase 3: Primitive Definitions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Phase 4: Entity Validation Blueprints
+    
+    function isValidUser(data) {
+      return data.uid == request.auth.uid 
+        && data.username is string && data.username.size() > 0 && data.username.size() <= 64
+        && (data.email == null || (data.email is string && data.email.size() <= 256))
+        && data.keys().hasAll(['uid', 'username'])
+        && data.keys().size() >= 2;
+    }
+
+    function isValidGameSave(data) {
+      return data.userId == request.auth.uid
+        && data.data is map
+        && data.keys().hasAll(['userId', 'data'])
+        && (!('checksum' in data) || (data.checksum is string && data.checksum.size() == 64));
+    }
+
+    function isValidProgression(data) {
+      return data.inventory is map
+        && data.skills is map
+        && data.consumables is map
+        && data.keys().hasAll(['inventory', 'skills', 'consumables'])
+        && data.keys().size() >= 3;
+    }
+
+    function isValidStory(data) {
+      return data.playedBeats is list
+        && data.unlockedLogs is list
+        && data.keys().hasAll(['playedBeats', 'unlockedLogs'])
+        && data.keys().size() >= 2;
+    }
+
+    function isValidLeaderboard(data) {
+      return data.userId == request.auth.uid
+        && data.username is string && data.username.size() > 0 && data.username.size() <= 64
+        && data.score is number && data.score >= 0
+        && data.wave is number && data.wave >= 0
+        && data.keys().hasAll(['userId', 'username', 'score', 'wave'])
+        && data.keys().size() >= 4;
+    }
+
+    // Rules
+    
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUser(incoming()) && isValidId(userId);
+      allow update: if isOwner(userId) && isValidUser(incoming()) 
+        && incoming().uid == existing().uid
+        && incoming().diff(existing()).affectedKeys().hasOnly(['username', 'email', 'updatedAt']);
+        
+      match /private/saves {
+        allow get: if isOwner(userId);
+        allow write: if isOwner(userId) && isValidGameSave(incoming());
+      }
+      
+      match /private/progression {
+        allow get: if isOwner(userId);
+        allow write: if isOwner(userId) && isValidProgression(incoming());
+      }
+      
+      match /private/story {
+        allow get: if isOwner(userId);
+        allow write: if isOwner(userId) && isValidStory(incoming());
+      }
+    }
+    
+    match /leaderboard/{userId} {
+      allow read: if true; // Publicly readable for list and get
+      allow create: if isOwner(userId) && isValidLeaderboard(incoming()) && isValidId(userId);
+      allow update: if isOwner(userId) && isValidLeaderboard(incoming())
+        && incoming().userId == existing().userId
+        && incoming().diff(existing()).affectedKeys().hasOnly(['username', 'score', 'wave', 'updatedAt']);
+    }
+  }
+}

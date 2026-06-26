@@ -1,9 +1,55 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;700;900&family=Press+Start+2P&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-pixel: "Press Start 2P", cursive;
+}
+
+@layer base {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-panel {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+  }
+  
+  .cyber-button {
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95;
+  }
+  
+  .cyber-text-glow {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+}
+
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  animation: scan 4s linear infinite;
+  pointer-events: none;
+  z-index: 100;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
 }
 
 html, body, #root {
@@ -13,4 +59,1087 @@ html, body, #root {
   padding: 0;
   overflow: hidden;
   touch-action: none; /* Prevent pull-to-refresh and swipe navigation */
+  background: #000;
+  cursor: none;
+}
+
+.custom-cursor-container {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -50%); /* Center the container around the cursor coordinate */
+  mix-blend-mode: normal; /* Use normal mix blend mode to render the beautiful colors cleanly */
+}
+
+/* Fallback for general menu / interface states */
+.custom-cursor-ring {
+  width: 32px;
+  height: 32px;
+  --cursor-color: #ffffff;
+  --cursor-shadow: rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--cursor-color);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 0.95), 
+    inset 0 0 0 1px rgba(0, 0, 0, 0.95), 
+    0 0 calc(8px * var(--biome-intensity, 1)) var(--cursor-shadow),
+    0 0 calc(14px * var(--biome-intensity, 1)) rgba(0, 0, 0, 0.6);
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  opacity: 0.85;
+  position: relative;
+}
+
+.custom-cursor-ring::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--cursor-color);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.95);
+  transition: background-color 0.15s ease;
+}
+
+/* Biome Theme Class Configurations */
+.custom-cursor-ring.biome-neon_core {
+  --cursor-color: #39ff14; /* neon green */
+  --cursor-shadow: rgba(57, 255, 20, 0.6);
+}
+
+.custom-cursor-ring.biome-quantum_void {
+  --cursor-color: #bb00ff; /* quantum purple */
+  --cursor-shadow: rgba(187, 0, 255, 0.6);
+}
+
+.custom-cursor-ring.biome-ember_depths {
+  --cursor-color: #ff4400; /* magma heat orange */
+  --cursor-shadow: rgba(255, 68, 0, 0.6);
+}
+
+.custom-cursor-ring.biome-frostbyte {
+  --cursor-color: #00ccff; /* frostbyte cyan */
+  --cursor-shadow: rgba(0, 204, 255, 0.6);
+}
+
+.custom-cursor-ring.biome-void_abyss {
+  --cursor-color: #ffffff; /* pure void white */
+  --cursor-shadow: rgba(255, 255, 255, 0.6);
+}
+
+.custom-cursor-ring.biome-golden_cache,
+.custom-cursor-ring.biome-golden_spire {
+  --cursor-color: #ffcc00; /* golden amber */
+  --cursor-shadow: rgba(255, 204, 0, 0.6);
+}
+
+/* Critical low health status: pulsing high alert override */
+.custom-cursor-ring.critical-health {
+  --cursor-color: #f43f5e !important; /* Rose Red */
+  --cursor-shadow: rgba(244, 63, 94, 0.7) !important;
+  animation: cursorHealthPulse 0.4s ease-in-out infinite alternate !important;
+}
+
+@keyframes cursorHealthPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.75;
+    box-shadow: 
+      0 0 0 1px rgba(0, 0, 0, 1), 
+      inset 0 0 0 1px rgba(0, 0, 0, 1), 
+      0 0 6px var(--cursor-shadow);
+  }
+  100% {
+    transform: scale(1.22);
+    opacity: 1;
+    box-shadow: 
+      0 0 0 1px rgba(0, 0, 0, 1), 
+      inset 0 0 0 1px rgba(0, 0, 0, 1), 
+      0 0 20px var(--cursor-shadow);
+  }
+}
+
+/* Clicking state scale down slightly for robust tactical feel */
+.custom-cursor-ring.clicking {
+  transform: scale(0.75);
+  opacity: 1;
+  --cursor-color: #22d3ee !important; /* Cyber action teal click override */
+  --cursor-shadow: rgba(34, 211, 238, 0.6) !important;
+}
+
+/* Expansion keyframes animation */
+@keyframes cursorHoverPulse {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.4);
+    box-shadow: 
+      0 0 0 1px rgba(0, 0, 0, 1), 
+      inset 0 0 0 1px rgba(0, 0, 0, 1), 
+      0 0 18px var(--cursor-shadow);
+  }
+  100% {
+    transform: scale(1.22);
+    box-shadow: 
+      0 0 0 1px rgba(0, 0, 0, 0.95), 
+      inset 0 0 0 1px rgba(0, 0, 0, 0.95), 
+      0 0 14px var(--cursor-shadow);
+  }
+}
+
+.custom-cursor-ring.hovering {
+  animation: cursorHoverPulse 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  opacity: 0.95;
+}
+
+/* Hides core design center dot when Weapon Mode glyph overlays are actively rendered */
+.custom-cursor-ring.has-weapon-mode::after {
+  display: none !important;
+}
+
+/* ===== Cursor Skins (Daily Challenge Rewards) ===== */
+
+/* Skin: Crimson Protocol — aggressive red with heat-pulse */
+.custom-cursor-ring.cursor-skin-skin_cyber_red {
+  --cursor-color: #dc2626 !important;
+  --cursor-shadow: rgba(220, 38, 38, 0.7) !important;
+  border-width: 2.5px;
+  animation: cursorSkinRedPulse 2s ease-in-out infinite;
+}
+
+@keyframes cursorSkinRedPulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 8px var(--cursor-shadow); }
+  50% { box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 20px var(--cursor-shadow), 0 0 40px rgba(220, 38, 38, 0.3); }
+}
+
+/* Skin: Golden Empire — luxurious gold with particle trail */
+.custom-cursor-ring.cursor-skin-skin_gold_empire {
+  --cursor-color: #f59e0b !important;
+  --cursor-shadow: rgba(245, 158, 11, 0.7) !important;
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(245, 158, 11, 0.6), 0 0 24px rgba(245, 158, 11, 0.2) !important;
+}
+
+.custom-cursor-ring.cursor-skin-skin_gold_empire::after {
+  background: #fbbf24 !important;
+  box-shadow: 0 0 6px #f59e0b !important;
+}
+
+/* Skin: Void Walker — dark with white core and distortion */
+.custom-cursor-ring.cursor-skin-skin_void_black {
+  --cursor-color: #ffffff !important;
+  --cursor-shadow: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+}
+
+.custom-cursor-ring.cursor-skin-skin_void_black::after {
+  width: 6px !important;
+  height: 6px !important;
+  background: #fff !important;
+  box-shadow: 0 0 10px rgba(255,255,255,0.8) !important;
+}
+
+/* Skin: Neon Pulse — cyan/pink dual-tone */
+.custom-cursor-ring.cursor-skin-skin_neon_pulse {
+  --cursor-color: #22d3ee !important;
+  --cursor-shadow: rgba(34, 211, 238, 0.6) !important;
+  border-color: #22d3ee;
+  animation: cursorSkinNeonPulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes cursorSkinNeonPulse {
+  0% { border-color: #22d3ee; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 8px rgba(34, 211, 238, 0.4); }
+  100% { border-color: #ec4899; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 16px rgba(236, 72, 153, 0.6); }
+}
+
+.custom-cursor-ring.cursor-skin-skin_neon_pulse::after {
+  animation: cursorSkinNeonDot 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes cursorSkinNeonDot {
+  0% { background: #22d3ee !important; box-shadow: 0 0 6px #22d3ee !important; }
+  100% { background: #ec4899 !important; box-shadow: 0 0 6px #ec4899 !important; }
+}
+
+/* Skin: Quantum Shift — phase-shifting flicker */
+.custom-cursor-ring.cursor-skin-skin_quantum_shift {
+  --cursor-color: #a855f7 !important;
+  --cursor-shadow: rgba(168, 85, 247, 0.6) !important;
+  animation: cursorSkinQuantum 0.8s steps(2) infinite;
+}
+
+@keyframes cursorSkinQuantum {
+  0% { border-color: #a855f7; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(168, 85, 247, 0.6); }
+  50% { border-color: #06b6d4; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(6, 182, 212, 0.6); }
+}
+
+/* Skin: Overseer — boss-themed red/black with glitch */
+.custom-cursor-ring.cursor-skin-skin_overseer {
+  --cursor-color: #ef4444 !important;
+  --cursor-shadow: rgba(239, 68, 68, 0.7) !important;
+  border-color: #ef4444;
+  border-width: 3px;
+  animation: cursorSkinOverseer 0.1s steps(3) infinite;
+}
+
+@keyframes cursorSkinOverseer {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(1px, -1px); }
+  66% { transform: translate(-1px, 0); }
+}
+
+.custom-cursor-ring.cursor-skin-skin_overseer::after {
+  background: #ef4444 !important;
+  width: 2px !important;
+  height: 2px !important;
+  box-shadow: 0 0 8px #ef4444 !important;
+}
+
+/* Skin: Chromatic Surge (7-day streak bonus) — full-spectrum */
+.custom-cursor-ring.cursor-skin-skin_rainbow {
+  --cursor-color: #ffffff !important;
+  --cursor-shadow: rgba(255, 255, 255, 0.8) !important;
+  animation: cursorSkinRainbow 3s linear infinite;
+}
+
+@keyframes cursorSkinRainbow {
+  0% { border-color: #ef4444; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(239, 68, 68, 0.6); }
+  16% { border-color: #f59e0b; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(245, 158, 11, 0.6); }
+  33% { border-color: #22c55e; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(34, 197, 94, 0.6); }
+  50% { border-color: #22d3ee; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(34, 211, 238, 0.6); }
+  66% { border-color: #3b82f6; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(59, 130, 246, 0.6); }
+  83% { border-color: #a855f7; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(168, 85, 247, 0.6); }
+  100% { border-color: #ef4444; box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(239, 68, 68, 0.6); }
+}
+
+.custom-cursor-ring.cursor-skin-skin_rainbow::after {
+  animation: cursorSkinRainbowDot 3s linear infinite;
+}
+
+@keyframes cursorSkinRainbowDot {
+  0% { background: #ef4444 !important; box-shadow: 0 0 6px #ef4444 !important; }
+  25% { background: #22c55e !important; box-shadow: 0 0 6px #22c55e !important; }
+  50% { background: #22d3ee !important; box-shadow: 0 0 6px #22d3ee !important; }
+  75% { background: #a855f7 !important; box-shadow: 0 0 6px #a855f7 !important; }
+  100% { background: #ef4444 !important; box-shadow: 0 0 6px #ef4444 !important; }
+}
+
+/* ===== Purchasable Cursor Skins (Supporter Pack) ===== */
+
+/* Skin: Plasma Arc — electrified with crackling plasma trails */
+.custom-cursor-ring.cursor-skin-skin_plasma_arc {
+  --cursor-color: #8b5cf6 !important;
+  --cursor-shadow: rgba(139, 92, 246, 0.7) !important;
+  border-color: #8b5cf6;
+  border-width: 2.5px;
+  animation: cursorSkinPlasmaArc 0.15s steps(3) infinite;
+}
+
+@keyframes cursorSkinPlasmaArc {
+  0% { box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 8px rgba(139, 92, 246, 0.6); }
+  50% { box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(139, 92, 246, 0.8), 0 0 24px rgba(139, 92, 246, 0.3); }
+}
+
+.custom-cursor-ring.cursor-skin-skin_plasma_arc::after {
+  background: #a78bfa !important;
+  box-shadow: 0 0 8px #8b5cf6 !important;
+}
+
+/* Skin: Shadow Ops — stealth-black with faint afterimage ghosting */
+.custom-cursor-ring.cursor-skin-skin_shadow_ops {
+  --cursor-color: #6b7280 !important;
+  --cursor-shadow: rgba(107, 114, 128, 0.3) !important;
+  border-color: #4b5563;
+  border-width: 2px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-cursor-ring.cursor-skin-skin_shadow_ops.hovering {
+  opacity: 0.9;
+  border-color: #9ca3af;
+}
+
+.custom-cursor-ring.cursor-skin-skin_shadow_ops::after {
+  background: #9ca3af !important;
+  width: 3px !important;
+  height: 3px !important;
+  box-shadow: 0 0 4px rgba(156, 163, 175, 0.4) !important;
+}
+
+/* Skin: Solar Flare — brilliant orange-gold with radiant burst pulses */
+.custom-cursor-ring.cursor-skin-skin_solar_flare {
+  --cursor-color: #f97316 !important;
+  --cursor-shadow: rgba(249, 115, 22, 0.7) !important;
+  border-color: #f97316;
+  border-width: 2.5px;
+  animation: cursorSkinSolarFlare 2s ease-in-out infinite;
+}
+
+@keyframes cursorSkinSolarFlare {
+  0%, 100% { 
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 8px rgba(249, 115, 22, 0.5);
+  }
+  50% { 
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 20px rgba(249, 115, 22, 0.8), 0 0 40px rgba(249, 115, 22, 0.3);
+    border-color: #fbbf24;
+  }
+}
+
+.custom-cursor-ring.cursor-skin-skin_solar_flare::after {
+  animation: cursorSkinSolarDot 2s ease-in-out infinite;
+}
+
+@keyframes cursorSkinSolarDot {
+  0%, 100% { background: #f97316 !important; box-shadow: 0 0 6px #f97316 !important; }
+  50% { background: #fbbf24 !important; box-shadow: 0 0 10px #fbbf24 !important; }
+}
+
+/* Skin: Void Echo — purple-black with phase-shifting echo trails */
+.custom-cursor-ring.cursor-skin-skin_void_echo {
+  --cursor-color: #7c3aed !important;
+  --cursor-shadow: rgba(124, 58, 237, 0.6) !important;
+  border-color: #6d28d9;
+  animation: cursorSkinVoidEcho 3s ease-in-out infinite;
+}
+
+@keyframes cursorSkinVoidEcho {
+  0% { 
+    border-color: #6d28d9; 
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 8px rgba(124, 58, 237, 0.4); 
+    opacity: 0.7;
+  }
+  50% { 
+    border-color: #c084fc; 
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 16px rgba(196, 132, 252, 0.6);
+    opacity: 0.9;
+  }
+  100% { 
+    border-color: #6d28d9; 
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 4px rgba(124, 58, 237, 0.2); 
+    opacity: 0.6;
+  }
+}
+
+.custom-cursor-ring.cursor-skin-skin_void_echo::after {
+  background: #c084fc !important;
+  width: 3px !important;
+  height: 3px !important;
+  box-shadow: 0 0 8px #7c3aed !important;
+  animation: cursorSkinVoidDot 3s ease-in-out infinite;
+}
+
+@keyframes cursorSkinVoidDot {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Skin: Quantum Core — cyan-magenta with blinking entanglement nodes */
+.custom-cursor-ring.cursor-skin-skin_quantum_core {
+  --cursor-color: #06b6d4 !important;
+  --cursor-shadow: rgba(6, 182, 212, 0.6) !important;
+  animation: cursorSkinQuantumCore 1.2s steps(2) infinite;
+}
+
+@keyframes cursorSkinQuantumCore {
+  0% { 
+    border-color: #06b6d4; 
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 10px rgba(6, 182, 212, 0.6);
+  }
+  50% { 
+    border-color: #ec4899; 
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 16px rgba(236, 72, 153, 0.7);
+  }
+}
+
+.custom-cursor-ring.cursor-skin-skin_quantum_core::after {
+  animation: cursorSkinQuantumDot 1.2s steps(2) infinite;
+}
+
+@keyframes cursorSkinQuantumDot {
+  0% { background: #06b6d4 !important; box-shadow: 0 0 6px #06b6d4 !important; }
+  50% { background: #ec4899 !important; box-shadow: 0 0 6px #ec4899 !important; }
+}
+
+/* Skin: Overseer Elite — premium boss-themed with continuous glitch static */
+.custom-cursor-ring.cursor-skin-skin_overseer_elite {
+  --cursor-color: #dc2626 !important;
+  --cursor-shadow: rgba(220, 38, 38, 0.8) !important;
+  border-color: #dc2626;
+  border-width: 3px;
+  animation: cursorSkinElite 0.05s steps(2) infinite;
+}
+
+@keyframes cursorSkinElite {
+  0% { 
+    transform: translate(0, 0); 
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 12px rgba(220, 38, 38, 0.7), 0 0 24px rgba(220, 38, 38, 0.3);
+  }
+  50% { 
+    transform: translate(1.5px, -1px); 
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.95), inset 0 0 0 1px rgba(0,0,0,0.95), 0 0 20px rgba(220, 38, 38, 0.9), 0 0 40px rgba(220, 38, 38, 0.4);
+    border-color: #7f1d1d;
+  }
+}
+
+.custom-cursor-ring.cursor-skin-skin_overseer_elite::after {
+  background: #ef4444 !important;
+  width: 2px !important;
+  height: 2px !important;
+  box-shadow: 0 0 10px #ef4444 !important;
+}
+
+/* ===== Armory Skin Preview Animation ===== */
+
+.skin-preview-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border-width: 2.5px;
+  border-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: skinPreviewFloat 3s ease-in-out infinite;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.skin-preview-ring::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--cursor-color, #fff);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px var(--cursor-color, #fff);
+}
+
+@keyframes skinPreviewFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Orbiting particle dots around preview ring */
+.skin-preview-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: skinParticleOrbit 3s ease-in-out infinite;
+}
+
+.skin-preview-particle:nth-child(2) {
+  animation-delay: -1s;
+  animation-duration: 3.5s;
+}
+
+.skin-preview-particle:nth-child(3) {
+  animation-delay: -2s;
+  animation-duration: 2.8s;
+}
+
+@keyframes skinParticleOrbit {
+  0% {
+    transform: rotate(0deg) translateX(28px) rotate(0deg);
+    opacity: 0.8;
+  }
+  25% {
+    opacity: 0.4;
+  }
+  50% {
+    transform: rotate(180deg) translateX(28px) rotate(-180deg);
+    opacity: 0.9;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: rotate(360deg) translateX(28px) rotate(-360deg);
+    opacity: 0.8;
+  }
+}
+
+/* Override custom-cursor-ring sizing when used as a preview */
+.skin-preview-ring.custom-cursor-ring {
+  width: 44px !important;
+  height: 44px !important;
+  opacity: 1;
+  box-shadow: none !important;
+  animation: skinPreviewFloat 3s ease-in-out infinite !important;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.skin-preview-ring.custom-cursor-ring::after {
+  width: 4px !important;
+  height: 4px !important;
+  box-shadow: 0 0 6px var(--cursor-color) !important;
+}
+
+/* Hovering a skin card makes the preview pulse more intensely */
+button:hover .skin-preview-ring.custom-cursor-ring {
+  animation-duration: 1.8s !important;
+}
+
+button:hover .skin-preview-particle {
+  animation-duration: 2s !important;
+}
+button:hover .skin-preview-particle:nth-child(2) {
+  animation-duration: 2.3s !important;
+}
+button:hover .skin-preview-particle:nth-child(3) {
+  animation-duration: 1.8s !important;
+}
+
+/* ===== Armory Theme Preview Animation ===== */
+
+.theme-preview-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border-width: 2.5px;
+  border-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: skinPreviewFloat 3s ease-in-out infinite;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-preview-ring::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: var(--theme-primary, #fff);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px var(--theme-glow, #fff);
+}
+
+/* Orbiting particle dots for theme previews */
+.theme-preview-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: skinParticleOrbit 3s ease-in-out infinite;
+}
+
+.theme-preview-particle:nth-child(2) {
+  animation-delay: -0.6s;
+  animation-duration: 3.5s;
+}
+.theme-preview-particle:nth-child(3) {
+  animation-delay: -1.2s;
+  animation-duration: 4s;
+}
+.theme-preview-particle:nth-child(4) {
+  animation-delay: -1.8s;
+  animation-duration: 3s;
+}
+.theme-preview-particle:nth-child(5) {
+  animation-delay: -2.4s;
+  animation-duration: 4.5s;
+}
+.theme-preview-particle:nth-child(6) {
+  animation-delay: -3s;
+  animation-duration: 3.8s;
+}
+
+/* Hover speed-up for theme cards */
+button:hover .theme-preview-ring {
+  animation-duration: 1.8s !important;
+}
+
+button:hover .theme-preview-particle {
+  animation-duration: 2s !important;
+}
+button:hover .theme-preview-particle:nth-child(2) {
+  animation-duration: 2.3s !important;
+}
+button:hover .theme-preview-particle:nth-child(3) {
+  animation-duration: 2.6s !important;
+}
+button:hover .theme-preview-particle:nth-child(4) {
+  animation-duration: 2s !important;
+}
+button:hover .theme-preview-particle:nth-child(5) {
+  animation-duration: 2.7s !important;
+}
+button:hover .theme-preview-particle:nth-child(6) {
+  animation-duration: 2.4s !important;
+}
+
+/* ===== Armory Skin Tooltip (Enlarged Preview) ===== */
+
+.skin-tooltip-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border-width: 4px;
+  border-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: skinTooltipFloat 4s ease-in-out infinite;
+}
+
+.skin-tooltip-ring::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--cursor-color, #fff);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px var(--cursor-color, #fff);
+}
+
+@keyframes skinTooltipFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Override custom-cursor-ring sizing when used as tooltip */
+.skin-tooltip-ring.custom-cursor-ring {
+  width: 80px !important;
+  height: 80px !important;
+  border-width: 4px !important;
+  opacity: 1;
+  box-shadow: none !important;
+  animation: skinTooltipFloat 4s ease-in-out infinite !important;
+}
+
+.skin-tooltip-ring.custom-cursor-ring::after {
+  width: 8px !important;
+  height: 8px !important;
+  box-shadow: 0 0 12px var(--cursor-color) !important;
+}
+
+/* Tooltip orbiting particles (larger, more of them) */
+.skin-tooltip-particle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: skinTooltipOrbit 4s ease-in-out infinite;
+}
+
+.skin-tooltip-particle:nth-child(2) {
+  animation-delay: -0.8s;
+  animation-duration: 4.5s;
+}
+.skin-tooltip-particle:nth-child(3) {
+  animation-delay: -1.6s;
+  animation-duration: 3.8s;
+}
+.skin-tooltip-particle:nth-child(4) {
+  animation-delay: -2.4s;
+  animation-duration: 5s;
+}
+.skin-tooltip-particle:nth-child(5) {
+  animation-delay: -3.2s;
+  animation-duration: 4.2s;
+}
+
+@keyframes skinTooltipOrbit {
+  0% {
+    transform: rotate(0deg) translateX(52px) rotate(0deg);
+    opacity: 0.9;
+  }
+  20% { opacity: 0.4; }
+  40% {
+    transform: rotate(144deg) translateX(52px) rotate(-144deg);
+    opacity: 0.8;
+  }
+  60% { opacity: 0.3; }
+  80% {
+    transform: rotate(288deg) translateX(52px) rotate(-288deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotate(360deg) translateX(52px) rotate(-360deg);
+    opacity: 0.7;
+  }
+}
+
+/* Tooltip container */
+.skin-tooltip {
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+  animation: skinTooltipFadeIn 0.15s ease-out forwards;
+}
+
+/* Ensure tooltip doesn't intercept mouse events from the button */
+.skin-tooltip * {
+  pointer-events: none;
+}
+
+@keyframes skinTooltipFadeIn {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Theme Tooltip (Enlarged Preview) ===== */
+
+.theme-tooltip-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border-width: 4px;
+  border-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: skinTooltipFloat 4s ease-in-out infinite;
+}
+
+.theme-tooltip-ring::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--theme-primary, #fff);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 12px var(--theme-glow, #fff);
+}
+
+.theme-tooltip-particle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: skinTooltipOrbit 4s ease-in-out infinite;
+}
+
+.theme-tooltip-particle:nth-child(2) {
+  animation-delay: -0.8s;
+  animation-duration: 4.5s;
+}
+.theme-tooltip-particle:nth-child(3) {
+  animation-delay: -1.6s;
+  animation-duration: 3.8s;
+}
+.theme-tooltip-particle:nth-child(4) {
+  animation-delay: -2.4s;
+  animation-duration: 5s;
+}
+.theme-tooltip-particle:nth-child(5) {
+  animation-delay: -3.2s;
+  animation-duration: 4.2s;
+}
+.theme-tooltip-particle:nth-child(6) {
+  animation-delay: -4s;
+  animation-duration: 4.8s;
+}
+
+/* ============================================================
+   BUGSMASHER v3.0 — Ultimate Visual Overhaul Styles
+   ============================================================ */
+
+@theme {
+  --color-bg-primary: #050505;
+  --color-bg-secondary: #0a0a0a;
+  --color-bg-elevated: #111111;
+  --color-accent-green: #00ff88;
+  --color-accent-red: #ff3333;
+  --color-accent-gold: #ffd700;
+  --color-accent-cyan: #00ccff;
+  --color-accent-orange: #ff6600;
+  --color-text-primary: #e0e0e0;
+  --color-text-secondary: #888888;
+  --color-text-muted: #555555;
+}
+
+/* ============================================================
+   CRT / SCANLINE EFFECTS (applied via CSS to canvas container)
+   ============================================================ */
+
+.canvas-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  z-index: 10;
+}
+
+/* Optional heavy CRT mode */
+.canvas-container.crt-mode::after {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.08) 1px,
+    rgba(0, 0, 0, 0.08) 3px
+  );
+}
+
+/* Vignette overlay */
+.canvas-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  z-index: 9;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+@keyframes flash-pulse {
+  0% { opacity: 0; }
+  50% { opacity: 0.15; }
+  100% { opacity: 0; }
+}
+
+@keyframes combo-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+@keyframes wave-text-in {
+  0% { transform: translateY(30px) scale(0.8); opacity: 0; filter: blur(10px); }
+  60% { transform: translateY(0) scale(1.05); opacity: 1; filter: blur(0); }
+  100% { transform: translateY(0) scale(1); opacity: 1; filter: blur(0); }
+}
+
+@keyframes wave-text-out {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.1); filter: blur(5px); }
+}
+
+@keyframes damage-shake {
+  0%, 100% { transform: translate(0); }
+  10% { transform: translate(-4px, 2px); }
+  20% { transform: translate(4px, -2px); }
+  30% { transform: translate(-3px, -3px); }
+  40% { transform: translate(3px, 3px); }
+  50% { transform: translate(-2px, 1px); }
+  60% { transform: translate(2px, -1px); }
+  70% { transform: translate(-1px, -2px); }
+  80% { transform: translate(1px, 2px); }
+}
+
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 90% 0); transform: translate(-2px); }
+  20% { clip-path: inset(20% 0 50% 0); transform: translate(2px); }
+  40% { clip-path: inset(50% 0 20% 0); transform: translate(-1px); }
+  60% { clip-path: inset(80% 0 0 0); transform: translate(1px); }
+  80% { clip-path: inset(10% 0 70% 0); transform: translate(-2px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px var(--color-accent-green), 0 0 10px var(--color-accent-green); }
+  50% { box-shadow: 0 0 15px var(--color-accent-green), 0 0 30px var(--color-accent-green); }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-60px) scale(1.2); opacity: 0; }
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+.animate-flash-pulse {
+  animation: flash-pulse 0.3s ease-out;
+}
+
+.animate-combo-pop {
+  animation: combo-pop 0.8s ease-out forwards;
+}
+
+.animate-wave-in {
+  animation: wave-text-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-wave-out {
+  animation: wave-text-out 0.4s ease-in forwards;
+}
+
+.animate-damage-shake {
+  animation: damage-shake 0.4s ease-in-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-float-up {
+  animation: float-up 1s ease-out forwards;
+}
+
+/* Glitch text effect */
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitch-text::before {
+  color: var(--color-accent-red);
+  animation: glitch-1 0.3s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  color: var(--color-accent-cyan);
+  animation: glitch-1 0.3s infinite linear alternate;
+  animation-delay: 0.1s;
+}
+
+/* ============================================================
+   GAME-SPECIFIC COMPONENTS
+   ============================================================ */
+
+/* Combo counter floating text */
+.combo-float {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-weight: 900;
+  color: var(--color-accent-gold);
+  text-shadow:
+    0 0 10px var(--color-accent-gold),
+    0 0 20px var(--color-accent-gold),
+    0 0 40px rgba(255, 215, 0, 0.5);
+  z-index: 100;
+}
+
+.combo-float.x5 { color: #ffffff; }
+.combo-float.x10 { color: var(--color-accent-gold); font-size: 1.2em; }
+.combo-float.x25 { color: var(--color-accent-orange); font-size: 1.5em; }
+.combo-float.x50 { color: var(--color-accent-red); font-size: 2em; }
+
+/* Wave announcement overlay */
+.wave-announcement {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.wave-announcement .wave-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.8),
+    0 0 40px rgba(0, 255, 136, 0.4);
+  letter-spacing: 0.1em;
+}
+
+.wave-announcement .wave-subtitle {
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--color-accent-green);
+  text-shadow: 0 0 10px var(--color-accent-green);
+  letter-spacing: 0.3em;
+  margin-top: 0.5rem;
+}
+
+/* Boss warning overlay */
+.boss-warning {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 50;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    rgba(255, 0, 0, 0.15) 100%
+  );
+}
+
+.boss-warning .warning-text {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  color: #ff3333;
+  text-shadow:
+    0 0 20px rgba(255, 0, 0, 0.8),
+    0 0 40px rgba(255, 0, 0, 0.5);
+  letter-spacing: 0.15em;
+  animation: damage-shake 0.5s ease-in-out infinite;
+}
+
+/* Health-critical vignette (applied via JS, styled here) */
+.health-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(255, 0, 0, 0.3) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.health-vignette.critical {
+  opacity: 1;
+  animation: pulse-glow 1s ease-in-out infinite;
 }

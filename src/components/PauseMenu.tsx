@@ -1,37 +1,33 @@
 import { motion } from 'motion/react';
-import { Volume2, VolumeX, Home, Play, Settings2 } from 'lucide-react';
+import { Home, Play, Settings2, Save, Download, Trophy, BookOpen } from 'lucide-react';
 import { soundManager } from '../game/SoundManager';
-import { useEffect, useState } from 'react';
+import { SaveManager } from '../game/SaveManager';
+import { useState } from 'react';
+import { AccountMenu } from './AccountMenu';
+import { IntelHub } from './IntelHub';
 
 export function PauseMenu({ 
   onResume, 
+  onSave,
+  onLoad,
+  onSettings,
   onMainMenu 
 }: { 
   onResume: () => void, 
+  onSave: () => void,
+  onLoad: () => void,
+  onSettings: () => void,
   onMainMenu: () => void 
 }) {
-  const [volTracker, setVolTracker] = useState(soundManager.volume);
-  const [muteTracker, setMuteTracker] = useState(soundManager.isMuted);
-
-  // Sync state if it was changed externally
-  useEffect(() => {
-    setVolTracker(soundManager.volume);
-    setMuteTracker(soundManager.isMuted);
-  }, []);
-
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVol = parseFloat(e.target.value);
-    soundManager.setVolume(newVol);
-    setVolTracker(newVol);
-  };
-
-  const handleToggleMute = () => {
-    const isNowMuted = soundManager.toggleMute();
-    setMuteTracker(isNowMuted);
-  };
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isIntelOpen, setIsIntelOpen] = useState(false);
+  const hasSave = SaveManager.hasSave();
 
   return (
     <div className="absolute inset-0 bg-black/60 backdrop-blur-xl flex flex-col items-center justify-center z-50 p-4">
+      {isAccountOpen && <AccountMenu onClose={() => setIsAccountOpen(false)} />}
+      {isIntelOpen && <IntelHub onBack={() => setIsIntelOpen(false)} />}
+      
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -48,47 +44,74 @@ export function PauseMenu({
         <p className="text-zinc-500 font-mono tracking-widest text-sm uppercase mb-10 text-center">
           Operations Suspended
         </p>
-        
-        <div className="w-full space-y-8 mb-10">
-          <div className="flex flex-col space-y-4">
-            <div className="flex items-center justify-between text-zinc-400 font-mono text-sm uppercase tracking-widest">
-              <span>Master Audio</span>
-              <button onClick={handleToggleMute} className="hover:text-white transition-colors">
-                {muteTracker ? <VolumeX className="w-5 h-5 text-red-500" /> : <Volume2 className="w-5 h-5" />}
-              </button>
-            </div>
-            <input 
-              type="range" 
-              min="0" 
-              max="1" 
-              step="0.05"
-              value={muteTracker ? 0 : volTracker}
-              onChange={handleVolumeChange}
-              disabled={muteTracker}
-              className="w-full accent-white h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer disabled:opacity-50"
-            />
-          </div>
-        </div>
 
         <div className="w-full flex flex-col space-y-4">
           <button 
             onClick={() => { soundManager.uiClick(); onResume(); }}
             onMouseEnter={() => soundManager.uiHover()}
-            className="w-full py-4 bg-white text-black hover:bg-zinc-200 rounded-full font-bold text-sm uppercase tracking-widest transition-all"
+            className="w-full py-4 bg-white text-black hover:bg-zinc-200 rounded-full font-bold text-sm uppercase tracking-widest transition-all shadow-lg"
           >
             <span className="flex items-center justify-center">
               <Play className="w-4 h-4 mr-3" />
-              Resume Operations
+              Resume
             </span>
+          </button>
+
+          <div className="grid grid-cols-2 gap-4">
+            <button 
+              onClick={() => { soundManager.uiClick(); onSave(); }}
+              onMouseEnter={() => soundManager.uiHover()}
+              className="py-3 bg-zinc-800/80 border border-white/10 hover:bg-zinc-700/80 text-zinc-300 rounded-2xl font-mono text-xs uppercase tracking-widest transition-colors flex items-center justify-center"
+            >
+              <Save className="w-4 h-4 mr-2 opacity-70" />
+              Save Game
+            </button>
+            <button 
+              onClick={() => { soundManager.uiClick(); onLoad(); }}
+              onMouseEnter={() => soundManager.uiHover()}
+              disabled={!hasSave}
+              className="py-3 bg-zinc-800/80 border border-white/10 hover:bg-zinc-700/80 text-zinc-300 rounded-2xl font-mono text-xs uppercase tracking-widest transition-colors flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              <Download className="w-4 h-4 mr-2 opacity-70" />
+              Load Game
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <button 
+              onClick={() => { soundManager.uiClick(); setIsAccountOpen(true); }}
+              onMouseEnter={() => soundManager.uiHover()}
+              className="py-3 bg-zinc-800/50 border border-white/10 hover:bg-white/5 text-zinc-400 rounded-2xl font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center justify-center"
+            >
+              <Trophy className="w-3.5 h-3.5 mr-2 opacity-70" />
+              Rankings
+            </button>
+            <button 
+              onClick={() => { soundManager.uiClick(); setIsIntelOpen(true); }}
+              onMouseEnter={() => soundManager.uiHover()}
+              className="py-3 bg-zinc-800/50 border border-white/10 hover:bg-white/5 text-zinc-400 rounded-2xl font-mono text-[10px] uppercase tracking-widest transition-colors flex items-center justify-center"
+            >
+              <BookOpen className="w-3.5 h-3.5 mr-2 opacity-70" />
+              System Intel
+            </button>
+          </div>
+
+          <button 
+            onClick={() => { soundManager.uiClick(); onSettings(); }}
+            onMouseEnter={() => soundManager.uiHover()}
+            className="w-full py-3 bg-zinc-800/50 border border-white/10 hover:bg-white/5 text-zinc-400 rounded-2xl font-mono text-xs uppercase tracking-widest transition-colors flex items-center justify-center"
+          >
+            <Settings2 className="w-4 h-4 mr-2 opacity-70" />
+            Settings
           </button>
           
           <button 
             onClick={() => { soundManager.uiClick(); onMainMenu(); }}
             onMouseEnter={() => soundManager.uiHover()}
-            className="w-full py-4 bg-transparent border-[0.5px] border-white/20 hover:bg-white/5 text-zinc-300 rounded-full font-medium text-sm font-mono uppercase tracking-widest transition-colors flex items-center justify-center"
+            className="w-full py-3 bg-transparent hover:text-red-400 text-zinc-500 rounded-full font-medium text-xs font-mono uppercase tracking-widest transition-colors flex items-center justify-center"
           >
-            <Home className="w-4 h-4 mr-3 opacity-70" />
-            Abort Run
+            <Home className="w-4 h-4 mr-3 opacity-50" />
+            Main Menu
           </button>
         </div>
       </motion.div>

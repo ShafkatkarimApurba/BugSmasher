@@ -7,20 +7,7 @@ coverage/
 .env*
 !.env.example
 
-.vercel
-*.exe
-*.tar.gz
-
-# Admin scripts (run locally)
-*admin.mjs
-*system.mjs
-check-*.mjs
-show-*.mjs
-seed-*.mjs
-enable-*.mjs
-configure-*.mjs
-create-*.mjs
-add-*.mjs
-test-auth.mjs
-test-db.mjs
-get-link.mjs
+# Functions (Cloud Functions for Firebase)
+functions/node_modules/
+functions/lib/
+functions/.env*

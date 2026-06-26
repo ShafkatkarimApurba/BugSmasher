@@ -4,8 +4,10 @@ export class AssetManager {
   
   // Default backgrounds to preload for instant switching
   private defaultAssets: string[] = [
-    // Preload a default combat background
-    'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1920&auto=format&fit=crop'
+    'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1920&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=1920&auto=format&fit=crop'
   ];
 
   async preloadAll(onProgress?: (progress: number) => void): Promise<void> {

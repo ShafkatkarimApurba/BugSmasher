@@ -55,15 +55,15 @@ export function MainMenu({
         />
       )}
 
-      <div className="z-10 flex flex-col items-center space-y-12 sm:space-y-16 w-full max-w-lg">
-        <div className="text-center space-y-6">
-          <div className="flex items-center justify-center mb-6">
+      <div className="z-10 flex flex-col items-center space-y-8 sm:space-y-10 w-full max-w-lg">
+        <div className="text-center space-y-4">
+          <div className="flex items-center justify-center mb-3">
             <Bug className="w-12 h-12 sm:w-16 sm:h-16 text-white opacity-80" />
           </div>
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter text-white font-display uppercase">
             BUGSMASHER
           </h1>
-          <div className="h-px w-24 bg-white/20 mx-auto mt-4 mb-6" />
+          <div className="h-px w-24 bg-white/20 mx-auto mt-2 mb-4" />
 
           {highScore > 0 && (
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4 mx-auto w-fit">
@@ -97,7 +97,7 @@ export function MainMenu({
           )}
         </div>
         
-        <div className="w-full flex flex-col items-center space-y-6 mt-12">
+        <div className="w-full flex flex-col items-center space-y-4 mt-6">
           <div className="flex flex-wrap gap-2 justify-center w-full">
             {(['endless', 'boss_rush'] as GameModeId[]).map((mode) => (
               <button
@@ -155,48 +155,51 @@ export function MainMenu({
               <span className="text-[8px] bg-yellow-500/20 text-yellow-400 px-1.5 py-0.5 rounded uppercase font-black tracking-wider">{streak.currentStreak}d</span>
             ) : null}
           </button>
+        </div>
 
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 pt-6 border-t border-white/5 w-full">
           <button 
             onClick={() => { soundManager.init(); soundManager.uiClick(); onSettings(); }}
             onMouseEnter={() => { soundManager.init(); soundManager.uiHover(); }}
-            className="flex items-center space-x-3 text-zinc-500 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
+            className="flex items-center space-x-1.5 text-zinc-500 hover:text-white transition-colors font-mono text-[10px] uppercase tracking-widest cursor-pointer"
           >
-            <Settings2 className="w-4 h-4" />
+            <Settings2 className="w-3.5 h-3.5" />
             <span>Hardware Tuning</span>
           </button>
 
           <button 
             onClick={() => { soundManager.init(); soundManager.uiClick(); setIsLeaderboardOpen(true); }}
             onMouseEnter={() => { soundManager.init(); soundManager.uiHover(); }}
-            className="flex items-center space-x-3 text-zinc-500 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
+            className="flex items-center space-x-1.5 text-zinc-500 hover:text-white transition-colors font-mono text-[10px] uppercase tracking-widest cursor-pointer"
           >
-            <ListOrdered className="w-4 h-4" />
+            <ListOrdered className="w-3.5 h-3.5" />
             <span>Nexus Rankings</span>
           </button>
 
           <button 
             onClick={() => { soundManager.init(); soundManager.uiClick(); setIsAccountOpen(true); }}
             onMouseEnter={() => { soundManager.init(); soundManager.uiHover(); }}
-            className="flex items-center space-x-3 text-zinc-500 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
+            className="flex items-center space-x-1.5 text-zinc-500 hover:text-white transition-colors font-mono text-[10px] uppercase tracking-widest cursor-pointer"
           >
-            <User className="w-4 h-4" />
+            <User className="w-3.5 h-3.5" />
             <span>Terminal Access</span>
           </button>
 
           <button
-            onClick={() => { soundManager.uiClick(); setIsAchievementsOpen(true); }}
-            className="flex items-center space-x-3 text-zinc-500 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
+            onClick={() => { soundManager.init(); soundManager.uiClick(); setIsAchievementsOpen(true); }}
+            onMouseEnter={() => { soundManager.init(); soundManager.uiHover(); }}
+            className="flex items-center space-x-1.5 text-zinc-500 hover:text-white transition-colors font-mono text-[10px] uppercase tracking-widest cursor-pointer"
           >
-            <Trophy className="w-4 h-4" />
+            <Trophy className="w-3.5 h-3.5" />
             <span>Achievements</span>
           </button>
 
           <button 
             onClick={() => { soundManager.init(); soundManager.uiClick(); onIntel?.(); }}
             onMouseEnter={() => { soundManager.init(); soundManager.uiHover(); }}
-            className="flex items-center space-x-3 text-zinc-500 hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
+            className="flex items-center space-x-1.5 text-zinc-500 hover:text-white transition-colors font-mono text-[10px] uppercase tracking-widest cursor-pointer"
           >
-            <BookOpen className="w-4 h-4" />
+            <BookOpen className="w-3.5 h-3.5" />
             <span>System Intel</span>
           </button>
         </div>

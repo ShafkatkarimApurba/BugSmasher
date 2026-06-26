@@ -105,6 +105,7 @@ export function GameOver({ score, wave, onRetry, onMainMenu }: { score: number, 
         <div className="flex flex-col space-y-4">
           <button
             onClick={async () => {
+              soundManager.init();
               soundManager.uiClick();
               try {
                 const blob = await generateShareCardImage({ score, wave });
@@ -113,7 +114,8 @@ export function GameOver({ score, wave, onRetry, onMainMenu }: { score: number, 
                 console.warn('Share card failed', e);
               }
             }}
-            className="w-full py-3 rounded-xl border border-white/10 text-zinc-300 font-mono text-xs uppercase tracking-widest hover:bg-white/5"
+            onMouseEnter={() => { soundManager.init(); soundManager.uiHover(); }}
+            className="w-full py-3 rounded-xl border border-white/10 text-zinc-300 font-mono text-xs uppercase tracking-widest hover:bg-white/5 cursor-pointer"
           >
             Share Score Card
           </button>

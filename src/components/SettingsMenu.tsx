@@ -144,7 +144,9 @@ export function SettingsMenu({ onBack, onOpenArmory }: { onBack: () => void; onO
                   type="range" min="0" max="1" step="0.01" 
                   value={isMuted ? 0 : masterVol} 
                   onChange={handleMasterVolume}
-                  className="w-full accent-white opacity-60 hover:opacity-100 transition-opacity"
+                  onMouseUp={() => { soundManager.init(); soundManager.uiClick(); }}
+                  onTouchEnd={() => { soundManager.init(); soundManager.uiClick(); }}
+                  className="w-full accent-white opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
                 />
               </div>
 
@@ -154,7 +156,9 @@ export function SettingsMenu({ onBack, onOpenArmory }: { onBack: () => void; onO
                   type="range" min="0" max="1" step="0.01" 
                   value={sfxVol} 
                   onChange={handleSfxVolume}
-                  className="w-full accent-zinc-500"
+                  onMouseUp={() => { soundManager.init(); soundManager.uiClick(); }}
+                  onTouchEnd={() => { soundManager.init(); soundManager.uiClick(); }}
+                  className="w-full accent-zinc-500 cursor-pointer"
                 />
               </div>
 
@@ -164,7 +168,9 @@ export function SettingsMenu({ onBack, onOpenArmory }: { onBack: () => void; onO
                   type="range" min="0" max="1" step="0.01" 
                   value={musicVol} 
                   onChange={handleMusicVolume}
-                  className="w-full accent-zinc-500"
+                  onMouseUp={() => { soundManager.init(); soundManager.uiHover(); }}
+                  onTouchEnd={() => { soundManager.init(); soundManager.uiHover(); }}
+                  className="w-full accent-zinc-500 cursor-pointer"
                 />
               </div>
             </div>

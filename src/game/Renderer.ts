@@ -190,6 +190,9 @@ export class Renderer {
    * Call this instead of individual draw methods for the complete frame.
    */
   renderFrame(ctx: CanvasRenderingContext2D): void {
+    // Apply DPR scale dynamically at start of frame to ensure correct coordinate space for rendering
+    ctx.setTransform(this.engine.dpr, 0, 0, this.engine.dpr, 0, 0);
+
     const w = this.engine.width;
     const h = this.engine.height;
 

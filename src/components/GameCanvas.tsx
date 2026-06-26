@@ -62,7 +62,7 @@ export const GameCanvas = forwardRef<GameEngine | null, GameCanvasProps>(({
     <canvas 
       ref={canvasRef} 
       className="w-full h-full block touch-none"
-      style={{ cursor: 'crosshair' }}
+      style={{ cursor: 'none' }}
     />
   );
 });

@@ -134,7 +134,7 @@ export function HUD({ engineRef, onPauseToggle, isPaused = false }: { engineRef:
           else if (threat > 1.3) { label = "Elevated"; color = "text-yellow-500"; }
           
           threatRef.current.textContent = label;
-          threatRef.current.className = `${color} font-mono text-[9px] uppercase tracking-widest font-black transition-colors`;
+          threatRef.current.className = `${color} font-mono text-[10px] uppercase tracking-widest font-black transition-colors`;
         }
 
         // Update Streak
@@ -160,12 +160,12 @@ export function HUD({ engineRef, onPauseToggle, isPaused = false }: { engineRef:
           if (cooldown > 0) {
             dashTextRef.current.textContent = `${cooldown.toFixed(1)}S`;
             dashBadgeRef.current.textContent = "CHARGING";
-            dashBadgeRef.current.className = "text-yellow-500 font-mono text-[9px] uppercase tracking-widest font-black";
+            dashBadgeRef.current.className = "text-yellow-500 font-mono text-[10px] uppercase tracking-widest font-black";
             dashBarRef.current.className = "h-full bg-yellow-500 transition-all duration-75";
           } else {
             dashTextRef.current.textContent = "READY";
             dashBadgeRef.current.textContent = "ONLINE";
-            dashBadgeRef.current.className = "text-cyan-400 font-mono text-[9px] uppercase tracking-widest font-black animate-pulse";
+            dashBadgeRef.current.className = "text-cyan-400 font-mono text-[10px] uppercase tracking-widest font-black animate-pulse";
             dashBarRef.current.className = "h-full bg-cyan-400 shadow-[0_0_8px_#00ffff]";
           }
 
@@ -205,8 +205,8 @@ export function HUD({ engineRef, onPauseToggle, isPaused = false }: { engineRef:
           <span ref={waveRef} className="text-sm sm:text-base font-medium font-mono text-white uppercase tracking-widest">WAVE 1</span>
           <div className="h-3 w-[1px] bg-white/10 mx-1" />
           <div className="flex flex-col">
-            <span className="text-[7px] text-zinc-600 font-bold uppercase tracking-tighter">Threat</span>
-            <span ref={threatRef} className="text-zinc-500 font-mono text-[9px] uppercase tracking-widest font-black">Stable</span>
+            <span className="text-[9px] text-zinc-600 font-bold uppercase tracking-tighter">Threat</span>
+            <span ref={threatRef} className="text-zinc-500 font-mono text-[10px] uppercase tracking-widest font-black">Stable</span>
           </div>
         </div>
 
@@ -245,8 +245,8 @@ export function HUD({ engineRef, onPauseToggle, isPaused = false }: { engineRef:
             </svg>
           </div>
           <div className="flex flex-col">
-            <span className="text-[6.5px] text-zinc-500 font-bold uppercase tracking-widest leading-none mb-0.5">CORE ESCAPE</span>
-            <span ref={dashBadgeRef} className="text-cyan-400 font-mono text-[9px] uppercase tracking-widest font-black leading-none">ONLINE</span>
+            <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest leading-none mb-0.5">CORE ESCAPE</span>
+            <span ref={dashBadgeRef} className="text-cyan-400 font-mono text-[10px] uppercase tracking-widest font-black leading-none">ONLINE</span>
           </div>
           <div className="h-4 w-[1px] bg-white/10" />
           <div className="flex flex-col w-12 sm:w-16">
@@ -257,13 +257,13 @@ export function HUD({ engineRef, onPauseToggle, isPaused = false }: { engineRef:
                 style={{ width: '100%' }}
               />
             </div>
-            <div className="flex justify-between items-center text-[7px] font-mono text-zinc-500 leading-none">
+            <div className="flex justify-between items-center text-[9px] font-mono text-zinc-500 leading-none">
               <span>BATTERY</span>
               <span ref={dashTextRef} className="text-zinc-400 font-bold">READY</span>
             </div>
           </div>
           <div className="h-4 w-[1px] bg-white/10" />
-          <span className="text-[8px] font-mono text-cyan-400 whitespace-nowrap bg-cyan-950/40 border border-cyan-500/25 px-1.5 py-0.5 rounded shadow-[0_0_6px_rgba(0,255,255,0.15)]">[SPACE / SHIFT]</span>
+          <span className="text-[9px] font-mono text-cyan-400 whitespace-nowrap bg-cyan-950/40 border border-cyan-500/25 px-1.5 py-0.5 rounded shadow-[0_0_6px_rgba(0,255,255,0.15)]">[SPC / SHFT]</span>
         </div>
       </div>
       
@@ -322,7 +322,7 @@ export function HUD({ engineRef, onPauseToggle, isPaused = false }: { engineRef:
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
               </span>
-              <span className="uppercase tracking-[0.2em] text-[8px]">SYS_DIAGNOSTICS</span>
+              <span className="uppercase tracking-[0.2em] text-[9px]">SYS_DIAGNOSTICS</span>
             </div>
             <div className="grid grid-cols-2 gap-x-6 gap-y-1">
               <div className="flex justify-between space-x-4">

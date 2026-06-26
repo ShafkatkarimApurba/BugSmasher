@@ -1,4 +1,4 @@
-# 🪲 BugSmasher by HopeTheory
+# 🪲 BugSmasher by Shafkat
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.4.2-blue" alt="Version">
@@ -128,7 +128,7 @@ src/
 ## 📦 Deployment
 
 - **Production:** https://bugsmasher-ten.vercel.app
-- **GitHub:** https://github.com/FahadIbrahim93/BugSmasher-HopeTheory
+- **GitHub:** https://github.com/ShafkatkarimApurba/BugSmasher
 - **Supabase:** https://supabase.com/dashboard/project/YOUR_PROJECT_ID
 
 ---
@@ -151,4 +151,4 @@ src/
 
 ## License
 
-MIT © 2026 HopeTheory
+MIT © 2026 Shafkat

@@ -68,7 +68,7 @@ export class ReferralManager {
   }
 
   generateReferralLink(): string {
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://bugsmasher.fahad.app';
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://bugsmasher.shafkat.app';
     const userId = this.getUserId();
     return `${baseUrl}?ref=${userId}`;
   }

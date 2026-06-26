@@ -263,7 +263,7 @@ export function SettingsMenu({ onClose }: SettingsMenuProps) {
         )}
 
         {/* Version */}
-        <p className="text-center text-xs text-zinc-600">Version 1.4.0 • BugSmasher by HopeTheory</p>
+        <p className="text-center text-xs text-zinc-600">Version 1.4.2 • BugSmasher by Shafkat</p>
       </div>
 
       {/* Overlays */}

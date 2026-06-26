@@ -82,7 +82,7 @@ export function MainMenu({ onStart }: { onStart: () => void }) {
             // No user signed in - show options
             <div className="w-full flex flex-col space-y-4">
               <button 
-                onClick={handleStart}
+                onClick={handlePlayAsGuest}
                 onMouseEnter={() => { soundManager.init(); soundManager.uiHover(); }}
                 className="group relative px-10 py-4 bg-white text-black hover:bg-zinc-200 rounded-full font-bold text-sm sm:text-base uppercase tracking-widest transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2"
               >

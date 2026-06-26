@@ -44,7 +44,7 @@ export function GameOver({ score, waves, kills, onRetry, onMainMenu }: GameOverP
   }, [score, waves, kills]);
 
   const handleShare = useCallback(async () => {
-    const text = `🎮 I scored ${score.toLocaleString()} points and reached Wave ${waves} in BugSmasher by HopeTheory!\n🐛 ${kills} bugs smashed\n#BugSmasher #HighScore`;
+    const text = `🎮 I scored ${score.toLocaleString()} points and reached Wave ${waves} in BugSmasher by Shafkat!\n🐛 ${kills} bugs smashed\n#BugSmasher #HighScore`;
 
     // Try native share first
     try {

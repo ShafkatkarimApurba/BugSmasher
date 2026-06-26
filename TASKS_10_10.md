@@ -1,6 +1,6 @@
 # 🎯 BUGSMASHER - COMPLETE
 
-**Project:** BugSmasher by HopeTheory  
+**Project:** BugSmasher by Shafkat  
 **Version:** 1.4.0  
 **Last Updated:** April 27, 2026  
 **Status:** ✅ DEPLOYED - 10/10

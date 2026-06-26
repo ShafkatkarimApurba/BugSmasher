@@ -5,7 +5,7 @@
 
 ---
 
-## Project: BugSmasher by Fahad
+## Project: BugSmasher by Shafkat
 - **Tagline:** DEFEND THE CORE. SMASH THE SWARM.
 - **Theme:** Cyberpunk AI Copilot Dashboard (2026)
 - **Quality Score:** 10/10 (P1 + P2 complete, gameplay logic audited & hardened)
@@ -147,7 +147,7 @@
 
 | Element | Value |
 |---------|-------|
-| Name | BugSmasher by Fahad |
+| Name | BugSmasher by Shafkat |
 | Tagline | DEFEND THE CORE. SMASH THE SWARM. |
 | Primary | #00FFCC (Cyan) |
 | Secondary | #FF3333 (Red) |
@@ -178,7 +178,7 @@ npm run build    # production
 
 ## 🔗 Links
 
-- **GitHub:** https://github.com/FahadIbrahim93/bugsmasher
+- **GitHub:** https://github.com/ShafkatkarimApurba/BugSmasher
 
 ---
 

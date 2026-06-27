@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ReactNode } from 'react';
 import { User as LucideUser, LogIn, LogOut, Trophy, X, Shield, History, Cloud, Mail, ExternalLink, AlertCircle, BarChart3, Clock, Target, Zap, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../contexts/AuthContext';
@@ -203,7 +203,7 @@ export function AccountMenu({ onClose }: { onClose: () => void }) {
   );
 }
 
-function StatCard({ icon, label, value }: { icon: any, label: string, value: string }) {
+function StatCard({ icon, label, value }: { icon: ReactNode, label: string, value: string }) {
   return (
     <div className="p-4 bg-white/5 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
       <div className="flex items-center space-x-2 text-zinc-500 mb-2">
@@ -215,7 +215,7 @@ function StatCard({ icon, label, value }: { icon: any, label: string, value: str
   );
 }
 
-function TabButton({ active, icon, label, onClick }: { active: boolean, icon: any, label: string, onClick: () => void }) {
+function TabButton({ active, icon, label, onClick }: { active: boolean, icon: ReactNode, label: string, onClick: () => void }) {
   return (
     <button 
       onClick={() => { soundManager.uiHover(); onClick(); }}

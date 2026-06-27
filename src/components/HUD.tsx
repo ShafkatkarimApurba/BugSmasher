@@ -82,7 +82,7 @@ export function HUD({ engineRef, onPauseToggle, isPaused = false }: { engineRef:
         if (localStorage.getItem('nexus_show_perf_stats') === 'true') {
           const engine = engineRef.current;
           if (engine) {
-            const pCount = engine.particleSystem?.particles?.filter((p: any) => p.active)?.length || 0;
+            const pCount = engine.particleSystem?.particles?.filter((p: { active: boolean }) => p.active)?.length || 0;
             setPerfData({
               fps: measuredFps,
               frameTime: parseFloat(avgFrameTime.toFixed(1)),

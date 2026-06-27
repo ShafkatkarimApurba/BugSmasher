@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
 import { X, Gem, Palette, Star, Crown, KeyRound, Sparkles, Bug, Shield, Wrench, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { soundManager } from '../game/SoundManager';
@@ -734,7 +734,7 @@ function tierBadgeColorMap(tier: SupporterTier): string {
 
 // ===== SUB-COMPONENTS =====
 
-function TabButton({ active, icon, label, onClick }: { active: boolean; icon: any; label: string; onClick: () => void }) {
+function TabButton({ active, icon, label, onClick }: { active: boolean; icon: ReactNode; label: string; onClick: () => void }) {
   return (
     <button
       onClick={onClick}

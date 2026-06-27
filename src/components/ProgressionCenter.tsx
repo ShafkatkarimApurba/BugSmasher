@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Hammer, BrainCircuit, Box, X, Zap, Cpu, Shield, Wrench, FlaskConical, Target, Binary } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ProgressionManager, ProgressionData } from '../game/ProgressionManager';
-import { RESOURCES, RECIPES, SKILLS, ResourceType } from '../game/ResourceTypes';
+import { RESOURCES, RECIPES, SKILLS, ResourceType, Recipe, Skill } from '../game/ResourceTypes';
 import { soundManager } from '../game/SoundManager';
 
 interface ProgressionCenterProps {
@@ -181,7 +181,7 @@ export function ProgressionCenter({ onClose }: ProgressionCenterProps) {
   );
 }
 
-function TabButton({ active, icon, label, onClick }: { active: boolean, icon: any, label: string, onClick: () => void }) {
+function TabButton({ active, icon, label, onClick }: { active: boolean, icon: React.ReactNode, label: string, onClick: () => void }) {
   return (
     <button 
       onClick={onClick}
@@ -197,7 +197,7 @@ function TabButton({ active, icon, label, onClick }: { active: boolean, icon: an
   );
 }
 
-function CraftCard({ recipe, inventory, count, onCraft }: { recipe: any, inventory: any, count: number, onCraft: () => void }) {
+function CraftCard({ recipe, inventory, count, onCraft }: { recipe: Recipe, inventory: Record<string, number>, count: number, onCraft: () => void }) {
   const canCraft = Object.entries(recipe.ingredients).every(([res, amount]) => (inventory[res] || 0) >= (amount as number));
 
   return (
@@ -250,7 +250,7 @@ function CraftCard({ recipe, inventory, count, onCraft }: { recipe: any, invento
   );
 }
 
-function SkillCard({ skill, inventory, level, onUpgrade }: { skill: any, inventory: any, level: number, onUpgrade: () => void }) {
+function SkillCard({ skill, inventory, level, onUpgrade }: { skill: Skill, inventory: Record<string, number>, level: number, onUpgrade: () => void }) {
   const cost = skill.costPerLevel(level);
   const canUpgrade = Object.entries(cost).every(([res, amount]) => (inventory[res] || 0) >= (amount as number)) && level < skill.maxLevel;
 

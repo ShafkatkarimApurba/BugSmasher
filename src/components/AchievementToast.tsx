@@ -2,12 +2,18 @@ import { useState, useEffect } from 'react';
 import { Trophy, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
+interface AchievementPayload {
+  title: string;
+  description: string;
+}
+
 export function AchievementToast() {
-  const [achievement, setAchievement] = useState<any>(null);
+  const [achievement, setAchievement] = useState<AchievementPayload | null>(null);
 
   useEffect(() => {
-    const handleAchievement = (e: any) => {
-      setAchievement(e.detail);
+    const handleAchievement = (e: Event) => {
+      const customEvent = e as CustomEvent<AchievementPayload>;
+      setAchievement(customEvent.detail);
       setTimeout(() => setAchievement(null), 5000);
     };
 

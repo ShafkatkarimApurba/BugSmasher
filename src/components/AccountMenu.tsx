@@ -98,7 +98,7 @@ export function AccountMenu({ onClose }: { onClose: () => void }) {
                       <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-start space-x-3 mb-4">
                         <AlertCircle className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
                         <p className="text-[10px] text-blue-300/80 font-mono leading-relaxed">
-                          RUNNING IN SANDBOX: If social login fails to redirect, try opening the <a href={window.location.href} target="_blank" rel="noreferrer" className="underline text-blue-400">Direct Link</a>.
+                          RUNNING IN SANDBOX: If social login fails to redirect, try opening the <a href={window.location.href} target="_blank" rel="noreferrer" className="underline text-blue-400">page in a new tab</a>.
                         </p>
                       </div>
                     )}
@@ -106,7 +106,7 @@ export function AccountMenu({ onClose }: { onClose: () => void }) {
                     <button 
                       onClick={handleLogin}
                       disabled={loading || authLoading}
-                      className="w-full py-4 bg-white text-black rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-zinc-200 transition-all flex items-center justify-center space-x-3 disabled:opacity-50 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                      className="w-full py-4 bg-white text-black rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-zinc-200 transition-all flex items-center justify-center space-x-2 disabled:opacity-50"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -219,7 +219,7 @@ function TabButton({ active, icon, label, onClick }: { active: boolean, icon: Re
   return (
     <button 
       onClick={() => { soundManager.uiHover(); onClick(); }}
-      className={`flex-1 flex items-center justify-center space-x-2 py-4 text-xs font-bold uppercase tracking-widest transition-all border-b-2 ${active ? 'border-white text-white bg-white/5' : 'border-transparent text-zinc-500 hover:text-white'}`}
+      className={`flex-1 flex items-center justify-center space-x-2 py-4 text-xs font-bold uppercase tracking-widest transition-all border-b-2 ${active ? 'border-white text-white bg-white/5' : 'border-transparent text-zinc-400 hover:text-zinc-200'}`}
     >
       {icon}
       <span>{label}</span>

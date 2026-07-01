@@ -49,3 +49,27 @@ export interface Hazard {
 
 export interface Powerup { active: boolean; x: number; y: number; type: string; color: string; icon: string; life: number; maxLife: number; size: number; collection: string; }
 export interface ResourcePickup { active: boolean; x: number; y: number; type: ResourceType; color: string; life: number; maxLife: number; size: number; }
+
+export interface BossConfig {
+  color: string;
+  baseSpeed: number;
+  speedPerWave: number;
+  size: number;
+  score: number;
+  baseHp: number;
+  hpPerWave: number;
+  attackRate: number;
+  minionSpawnCount: number;
+  glitchChance: number;
+  barrageRate: number;
+  barrageCount: number;
+  barrageWarningTime: number;
+  barrageRadius: number;
+  shieldDuration: number;
+  variants: Array<{
+    id: string;
+    name: string;
+    color: string;
+    logic: string;
+  }>;
+}
